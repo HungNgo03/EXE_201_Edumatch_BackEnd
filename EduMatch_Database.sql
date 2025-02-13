@@ -91,17 +91,17 @@ CREATE TABLE Messages (
     FOREIGN KEY (ReceiverID) REFERENCES Users(ID) 
 );
 CREATE TABLE Post (
-    ID INT IDENTITY(1,1) PRIMARY KEY,
-    UserID INT NOT NULL,  -- Người đăng bài
-    SubjectID INT NOT NULL,  -- Môn học cần review
-    Title NVARCHAR(255) NOT NULL,  -- Tiêu đề bài đăng
-    Content NVARCHAR(MAX) NOT NULL,  -- Nội dung bài viết
-    Rating INT CHECK (Rating BETWEEN 1 AND 5),  -- Đánh giá từ 1-5 sao
-    CreatedAt DATETIME DEFAULT GETDATE(),  -- Ngày đăng bài
-    UpdatedAt DATETIME DEFAULT GETDATE(),  -- Ngày cập nhật bài
+                      ID INT IDENTITY(1,1) PRIMARY KEY,
+                      UserID INT NOT NULL,  -- Người đăng bài
+                      SubjectID INT NOT NULL,  -- Môn học cần review
+                      Title NVARCHAR(255) NOT NULL,  -- Tiêu đề bài đăng
+                      Content NVARCHAR(MAX) NOT NULL,  -- Nội dung bài viết
+                      Rating INT CHECK (Rating BETWEEN 1 AND 5),  -- Đánh giá từ 1-5 sao
+                      created_at DATETIME DEFAULT GETDATE(),  -- Ngày đăng bài
+                      updated_at DATETIME DEFAULT GETDATE(),  -- Ngày cập nhật bài
 
-    FOREIGN KEY (UserID) REFERENCES Users(ID) ,
-    FOREIGN KEY (SubjectID) REFERENCES Subjects(ID) 
+                      FOREIGN KEY (UserID) REFERENCES Users(ID) ,
+                      FOREIGN KEY (SubjectID) REFERENCES Subjects(ID)
 );
 
 
