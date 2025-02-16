@@ -1,15 +1,12 @@
 package com.FindTutor.FindTutor.Entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id; // Ensure this import is present
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.Date;
+import java.util.List;
 
 @Data
 @Getter
@@ -19,24 +16,31 @@ import java.util.Date;
 public class Classes {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int ID;
-    private int TutorID;
-    private int StudentID;
-    private int SubjectID;
-    private Date StartDate;
-    private Date EndDate;
-    private String Status;
+    private int id;
+
+    @ManyToOne
+    @JoinColumn(name = "TutorID", nullable = false)
+    private Tutors tutor;
+
+    @ManyToOne
+    @JoinColumn(name = "StudentID", nullable = false)
+    private Students student;
+
+    @ManyToOne
+    @JoinColumn(name = "SubjectID", nullable = false)
+    private Subjects subject;
+
+    @Column(nullable = false)
+    private Date startDate;
+
+    private Date endDate;
+
+    @Column(nullable = false)
+    private String status;
+
+    @OneToMany(mappedBy = "classes", cascade = CascadeType.ALL)
+    private List<Schedules> schedules;
 
     public Classes() {
-    }
-
-    public Classes(int id, int tutorId, int studentId, int subjectId, Date startDate, Date endDate, String status) {
-        ID = id;
-        TutorID = tutorId;
-        StudentID = studentId;
-        SubjectID = subjectId;
-        StartDate = startDate;
-        EndDate = endDate;
-        Status = status;
     }
 }

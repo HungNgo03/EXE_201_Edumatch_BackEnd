@@ -15,20 +15,25 @@ import java.util.Date;
 public class Schedules {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int Id;
-    private int ClassID;
-    private Date Date;
-    private String StartTime;
-    private String EndTime;
+    private int id;
+
+    @ManyToOne
+    @JoinColumn(name = "ClassID", referencedColumnName = "ID", nullable = false)
+    private Classes classes;
+
+    @ManyToOne
+    @JoinColumn(name = "TutorID", referencedColumnName = "ID", nullable = false)
+    private Tutors tutor;
+
+    @Column(nullable = false)
+    private Date date;
+
+    @Column(nullable = false)
+    private String startTime;
+
+    @Column(nullable = false)
+    private String endTime;
 
     public Schedules() {
-    }
-
-    public Schedules(int id, int classID, java.util.Date date, String startTime, String endTime) {
-        Id = id;
-        ClassID = classID;
-        Date = date;
-        StartTime = startTime;
-        EndTime = endTime;
     }
 }
