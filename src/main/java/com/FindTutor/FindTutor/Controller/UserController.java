@@ -23,6 +23,7 @@ public class UserController {
     // Đăng ký tài khoản
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@RequestBody Users user) {
+        System.out.println("Received user: " + user.getUsername() + ", Password: " + user.getPasswordHash());
         if (userService.existsByUsername(user.getUsername())) {
             return ResponseEntity.badRequest().body("Username '" + user.getUsername() + "' already taken");
         }
@@ -30,12 +31,21 @@ public class UserController {
             return ResponseEntity.badRequest().body("Email already in use");
         }
 
-        // Mã hóa mật khẩu
-        user.setPasswordHash(passwordEncoder.encode(user.getPasswordHash()));
+        if (userService.existsByPhoneNumber(user.getPhoneNumber())) {
+            return ResponseEntity.badRequest().body("Phone number already in use");
+        }
+
+        if (user.getPasswordHash() == null) {
+            return ResponseEntity.badRequest().body("Password cannot be null");
+        }
+
+        String encodedPassword = passwordEncoder.encode(user.getPasswordHash());
+        user.setPasswordHash(encodedPassword);
 
         userService.registerUser(user);
         return ResponseEntity.ok("User registered successfully");
     }
+
 
     // Đăng nhập tài khoản
 
@@ -46,7 +56,10 @@ public class UserController {
         if (user == null || !passwordEncoder.matches(loginRequest.getPassword(), user.getPasswordHash())) {
             return ResponseEntity.status(401).body("Invalid username or password");
         }
+        else{
+            return ResponseEntity.ok("Login Successful");
+        }
 
-        return ResponseEntity.ok("Login Successful");
+
     }
 }
