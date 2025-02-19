@@ -17,11 +17,11 @@ public class Users {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int ID;
-    private String Username;
+    private String username;
     private String PasswordHash;
     private String FullName;
     @Email
-    private String Email;
+    private String email;
     private String PhoneNumber;
     private String Role;
     private Date CreatedAt;
@@ -31,10 +31,10 @@ public class Users {
 
     public Users(int ID, String username, String passwordHash, String fullName, String email, String phoneNumber, String role, Date createdAt) {
         this.ID = ID;
-        Username = username;
+        this.username = username;
         PasswordHash = passwordHash;
         FullName = fullName;
-        Email = email;
+        this.email = email;
         PhoneNumber = phoneNumber;
         Role = role;
         CreatedAt = createdAt;
