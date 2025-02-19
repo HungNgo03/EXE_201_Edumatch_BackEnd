@@ -19,12 +19,12 @@ public class Users {
     private int ID;
     private String username;
     @Column(name = "password_hash")
-    private String PasswordHash;
+    private String passwordHash;
     private String fullname;
     @Email
     private String email;
     @Column(name = "phone_number")
-    private String PhoneNumber;
+    private String phoneNumber;
     private String Role;
     @Column(name = "created_at")
     private Date CreatedAt;
@@ -35,10 +35,10 @@ public class Users {
     public Users(int ID, String username, String passwordHash, String fullName, String email, String phoneNumber, String role, Date createdAt) {
         this.ID = ID;
         this.username = username;
-        PasswordHash = passwordHash;
+        this.passwordHash = passwordHash;
         fullname = fullName;
         this.email = email;
-        PhoneNumber = phoneNumber;
+        this.phoneNumber = phoneNumber;
         Role = role;
         CreatedAt = createdAt;
     }
