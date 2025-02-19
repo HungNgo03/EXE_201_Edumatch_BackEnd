@@ -5,13 +5,13 @@ USE TutorFinder;
 GO
 CREATE TABLE Users (
     ID INT IDENTITY(1,1) PRIMARY KEY,
-    Username NVARCHAR(50) UNIQUE NOT NULL,
-    PasswordHash NVARCHAR(255) NOT NULL,
-    FullName NVARCHAR(100) NOT NULL,
+    username NVARCHAR(50) UNIQUE NOT NULL,
+    password_hash NVARCHAR(255) NOT NULL,
+    fullname NVARCHAR(100) NOT NULL,
     Email NVARCHAR(100) UNIQUE NOT NULL,
-    PhoneNumber NVARCHAR(15) UNIQUE NOT NULL,
+    phone_number NVARCHAR(15) UNIQUE NOT NULL,
     Role NVARCHAR(10) CHECK (Role IN ('Student', 'Tutor', 'Admin','System Admin')) NOT NULL,
-    CreatedAt DATETIME DEFAULT GETDATE()
+    created_at DATETIME DEFAULT GETDATE()
 );
 CREATE TABLE Tutors (
     ID INT IDENTITY(1,1) PRIMARY KEY,
@@ -36,7 +36,7 @@ CREATE TABLE Students (
 );
 CREATE TABLE Subjects (
     ID INT IDENTITY(1,1) PRIMARY KEY,
-    SubjectName NVARCHAR(100) UNIQUE NOT NULL,
+    subjectname NVARCHAR(100) UNIQUE NOT NULL,
     Description NVARCHAR(MAX)
 );
 CREATE TABLE TutorSubjects (

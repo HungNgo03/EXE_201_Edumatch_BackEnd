@@ -1,7 +1,7 @@
 package com.FindTutor.FindTutor.Controller;
 
 import com.FindTutor.FindTutor.Entity.Users;
-import com.FindTutor.FindTutor.dto.LoginRequest;
+import com.FindTutor.FindTutor.DTO.LoginRequest;
 import com.FindTutor.FindTutor.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

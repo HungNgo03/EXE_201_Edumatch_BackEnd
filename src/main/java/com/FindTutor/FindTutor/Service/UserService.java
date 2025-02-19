@@ -1,7 +1,7 @@
 package com.FindTutor.FindTutor.Service;
 
 import com.FindTutor.FindTutor.Entity.Users;
-import com.FindTutor.FindTutor.repository.UserRepository;
+import com.FindTutor.FindTutor.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -18,12 +18,15 @@ public class Users {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int ID;
     private String username;
+    @Column(name = "password_hash")
     private String PasswordHash;
-    private String FullName;
+    private String fullname;
     @Email
     private String email;
+    @Column(name = "phone_number")
     private String PhoneNumber;
     private String Role;
+    @Column(name = "created_at")
     private Date CreatedAt;
 
     public Users() {
@@ -33,7 +36,7 @@ public class Users {
         this.ID = ID;
         this.username = username;
         PasswordHash = passwordHash;
-        FullName = fullName;
+        fullname = fullName;
         this.email = email;
         PhoneNumber = phoneNumber;
         Role = role;

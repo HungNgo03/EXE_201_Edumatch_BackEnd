@@ -14,7 +14,7 @@ public class Subjects {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int ID;
-    private String SubjectName;
+    private String subjectname;
     private String Description;
 
     public Subjects() {
@@ -22,7 +22,7 @@ public class Subjects {
 
     public Subjects(int ID, String subjectName, String description) {
         this.ID = ID;
-        SubjectName = subjectName;
+        subjectname = subjectName;
         Description = description;
     }
 }

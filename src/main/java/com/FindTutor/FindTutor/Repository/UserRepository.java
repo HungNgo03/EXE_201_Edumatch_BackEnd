@@ -1,4 +1,4 @@
-package com.FindTutor.FindTutor.repository;
+package com.FindTutor.FindTutor.Repository;
 
 import com.FindTutor.FindTutor.Entity.Users;
 import org.springframework.data.jpa.repository.JpaRepository;

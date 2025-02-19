@@ -1,5 +1,6 @@
 package com.FindTutor.FindTutor.Service;
 
+import com.FindTutor.FindTutor.DTO.PostDTO;
 import com.FindTutor.FindTutor.Entity.Post;
 import com.FindTutor.FindTutor.Repository.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +26,7 @@ public class PostService implements IPostService {
     }
 
     @Override
-    public List<Post> getAllPost() {
-        return postRepository.findAll();
+    public List<PostDTO> getAllPost() {
+        return postRepository.getAllPostWithUserAndSubject();
     }
 }
