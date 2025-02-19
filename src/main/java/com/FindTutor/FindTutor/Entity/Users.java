@@ -24,7 +24,7 @@ public class Users {
     @Email
     private String email;
     @Column(name = "phone_number")
-    private String PhoneNumber;
+    private String phoneNumber;
     private String Role;
     @Column(name = "created_at")
     private Date CreatedAt;
@@ -38,7 +38,7 @@ public class Users {
         this.passwordHash = passwordHash;
         fullname = fullName;
         this.email = email;
-        PhoneNumber = phoneNumber;
+        this.phoneNumber = phoneNumber;
         Role = role;
         CreatedAt = createdAt;
     }

@@ -23,6 +23,16 @@ public class UserController {
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@RequestBody Users user) {
         System.out.println("Received user: " + user.getUsername() + ", Password: " + user.getPasswordHash());
+        if (userService.existsByUsername(user.getUsername())) {
+            return ResponseEntity.badRequest().body("Username '" + user.getUsername() + "' already taken");
+        }
+        if (userService.existsByEmail(user.getEmail())) {
+            return ResponseEntity.badRequest().body("Email already in use");
+        }
+
+        if (userService.existsByPhoneNumber(user.getPhoneNumber())) {
+            return ResponseEntity.badRequest().body("Phone number already in use");
+        }
 
         if (user.getPasswordHash() == null) {
             return ResponseEntity.badRequest().body("Password cannot be null");
