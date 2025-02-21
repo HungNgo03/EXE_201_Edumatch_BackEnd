@@ -2,6 +2,7 @@ package com.FindTutor.FindTutor.Controller;
 
 import com.FindTutor.FindTutor.Entity.Users;
 import com.FindTutor.FindTutor.DTO.LoginRequest;
+import com.FindTutor.FindTutor.Service.OtpService;
 import com.FindTutor.FindTutor.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +27,48 @@ public class UserController {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private OtpService otpService;
+
+    @PostMapping("/forgot-password")
+    public ResponseEntity<?> forgotPassword(@RequestParam String email) {
+        Users user = userService.findByEmail(email);
+        if (user == null) {
+            return ResponseEntity.badRequest().body("Email không tồn tại trong hệ thống");
+        }
+
+        String otp = otpService.generateOtp(email);
+        return ResponseEntity.ok("OTP đã được gửi đến email của bạn");
+    }
+
+    // Bước 2: Xác nhận OTP
+    @PostMapping("/verify-otp")
+    public ResponseEntity<?> verifyOtp(@RequestParam String email, @RequestParam String otp) {
+        if (otpService.verifyOtp(email, otp)) {
+            return ResponseEntity.ok("OTP hợp lệ");
+        }
+        return ResponseEntity.badRequest().body("OTP không hợp lệ");
+    }
+
+    // Bước 3: Đặt lại mật khẩu
+    @PostMapping("/reset-password")
+    public ResponseEntity<?> resetPassword(@RequestParam String email, @RequestParam String otp, @RequestParam String newPassword) {
+        if (!otpService.verifyOtp(email, otp)) {
+            return ResponseEntity.badRequest().body("OTP không hợp lệ");
+        }
+
+        Users user = userService.findByEmail(email);
+        if (user == null) {
+            return ResponseEntity.badRequest().body("Email không tồn tại");
+        }
+
+        user.setPasswordHash(passwordEncoder.encode(newPassword));
+        userService.updateUser(user); // Cập nhật mật khẩu mới
+
+        return ResponseEntity.ok("Mật khẩu đã được đặt lại thành công");
+    }
+
 
     // Đăng ký tài khoản
     @PostMapping("/register")
