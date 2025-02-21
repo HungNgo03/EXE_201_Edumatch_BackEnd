@@ -5,11 +5,18 @@ import com.FindTutor.FindTutor.DTO.LoginRequest;
 import com.FindTutor.FindTutor.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+
+import jakarta.servlet.http.HttpSession;
+
 import org.springframework.security.access.prepost.PreAuthorize;
+
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
+@CrossOrigin(origins = "http://localhost:63342",allowCredentials = "true")
 @RestController
 @RequestMapping("/users")
 public class UserController {
@@ -50,16 +57,35 @@ public class UserController {
     // Đăng nhập tài khoản
 
     @PostMapping("/login")
-    public ResponseEntity<String> loginUser(@RequestBody LoginRequest loginRequest) {
+    public ResponseEntity<?> loginUser(@RequestBody LoginRequest loginRequest, HttpSession session) {
         Users user = userService.findByUsername(loginRequest.getUsername());
 
         if (user == null || !passwordEncoder.matches(loginRequest.getPassword(), user.getPasswordHash())) {
             return ResponseEntity.status(401).body("Invalid username or password");
         }
-        else{
-            return ResponseEntity.ok("Login Successful");
+
+        // Lưu user vào session
+        session.setAttribute("user", user);
+
+        return ResponseEntity.ok(Map.of(
+                "message", "Login Successful",
+                "username", user.getUsername()
+        ));
+    }
+
+    @GetMapping("/profile")
+    public ResponseEntity<?> getProfile(HttpSession session) {
+        Users user = (Users) session.getAttribute("user");
+        if (user == null) {
+            return ResponseEntity.status(401).body("Not logged in");
         }
 
+        return ResponseEntity.ok(user);
+    }
 
+    @PostMapping("/logout")
+    public ResponseEntity<?> logoutUser(HttpSession session) {
+        session.invalidate();
+        return ResponseEntity.ok("Logged out successfully");
     }
 }
