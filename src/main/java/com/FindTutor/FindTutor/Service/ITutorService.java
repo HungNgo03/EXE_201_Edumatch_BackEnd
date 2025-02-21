@@ -1,10 +1,10 @@
 package com.FindTutor.FindTutor.Service;
 
-import com.FindTutor.FindTutor.Entity.Tutors;
+
+import com.FindTutor.FindTutor.dto.TutorDTO;
 
 import java.util.List;
 
 public interface ITutorService {
-    List<Tutors> getAllTutors();
-    Tutors getTutorById(Integer id);
+    List<TutorDTO> getAllTutors(String name, String subject);
 }
