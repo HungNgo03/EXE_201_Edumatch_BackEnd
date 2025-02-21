@@ -17,7 +17,7 @@ public class Schedules {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ClassID", referencedColumnName = "ID", nullable = false)
     private Classes classes;
 
