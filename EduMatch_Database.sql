@@ -103,6 +103,14 @@ CREATE TABLE Post (
                       FOREIGN KEY (UserID) REFERENCES Users(ID) ,
                       FOREIGN KEY (SubjectID) REFERENCES Subjects(ID)
 );
+CREATE TABLE TutorAvailability (
+                                   ID INT IDENTITY(1,1) PRIMARY KEY,
+                                   TutorID INT NOT NULL,
+                                   DayOfWeek INT CHECK (DayOfWeek BETWEEN 1 AND 7) NOT NULL, -- 1: Monday, ..., 7: Sunday
+                                   StartTime TIME NOT NULL,
+                                   EndTime TIME NOT NULL,
+                                   Status bit,
 
-
-
+                                   FOREIGN KEY (TutorID) REFERENCES Tutors(ID) ON DELETE CASCADE,
+                                   UNIQUE (TutorID, DayOfWeek, StartTime, EndTime)
+);
