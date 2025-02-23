@@ -29,7 +29,16 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/users/**","Post/addPost","Post/getAllPost").permitAll()
+<<<<<<< Updated upstream
                         .anyRequest().authenticated()
+=======
+
+
+
+
+                        .anyRequest().permitAll()
+
+>>>>>>> Stashed changes
                 )
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED))

@@ -18,8 +18,37 @@ public class Tutors {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+<<<<<<< Updated upstream
     @OneToOne
     @JoinColumn(name = "UserID", referencedColumnName = "ID", nullable = false)
+=======
+    @Column(name = "UserID", nullable = false, unique = true)
+    private int userID;
+
+    @Column(name = "Gender", nullable = false)
+    private Boolean Gender; // true: Female, false: Male
+
+    @Column(name = "DateOfBirth", nullable = false)
+    private Date DateOfBirth;
+
+    @Column(name = "Address", nullable = false)
+    private String Address;
+
+    @Column(name = "Qualification", nullable = false)
+    private String Qualification;
+
+    @Column(name = "Experience", nullable = false)
+    private int Experience;
+
+    @Column(name = "Bio")
+    private String Bio;
+
+    @Column(name = "Status")
+    private int Status;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "UserID", insertable = false, updatable = false)
+>>>>>>> Stashed changes
     private Users user;
 
     @Column(nullable = false)

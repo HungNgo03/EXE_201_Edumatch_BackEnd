@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 @Service
 public class UserService {
 
@@ -29,13 +31,10 @@ public class UserService {
     public Users registerUser(Users user) {
         return userRepository.save(user);
     }
-//    public Students getStudentInfo(int userId) {
-//        return studentRepository.findByUserID(userId).orElse(null);
-//    }
-//
-//    public Tutors getTutorInfo(int userId) {
-//        return tutorRepository.findByUserID(userId).orElse(null);
-//    }
+
+    public Optional<Users> findById(int id) {
+        return userRepository.findById(id);
+    }
 
 
     public Users findByUsername(String Username) {
