@@ -28,17 +28,10 @@ public class SecurityConfig {
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
+
                         .requestMatchers("/users/**","Post/addPost","Post/getAllPost").permitAll()
-<<<<<<< Updated upstream
-                        .anyRequest().authenticated()
-=======
-
-
-
-
                         .anyRequest().permitAll()
 
->>>>>>> Stashed changes
                 )
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED))
@@ -51,7 +44,7 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedOrigins(List.of("http://localhost:63342")); // Cho phép frontend
+        config.setAllowedOrigins(List.of("http://127.0.0.1:5500")); // Cho phép frontend
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         config.setAllowCredentials(true); // Cho phép gửi credentials (cookie, session)
         config.setAllowedHeaders(List.of("Authorization", "Cache-Control", "Content-Type"));

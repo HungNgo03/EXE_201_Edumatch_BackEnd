@@ -10,12 +10,15 @@ import com.FindTutor.FindTutor.Service.OtpService;
 import com.FindTutor.FindTutor.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-<<<<<<< Updated upstream
-=======
+
+
 import com.FindTutor.FindTutor.DTO.RegisterRequest;
 
->>>>>>> Stashed changes
+
 import jakarta.servlet.http.HttpSession;
+
+import org.springframework.security.access.prepost.PreAuthorize;
+
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
@@ -147,6 +150,7 @@ public class UserController {
 
 
     // Đăng nhập tài khoản
+
     @PostMapping("/login")
     public ResponseEntity<?> loginUser(@RequestBody LoginRequest loginRequest, HttpSession session) {
         Users user = userService.findByUsername(loginRequest.getUsername());
