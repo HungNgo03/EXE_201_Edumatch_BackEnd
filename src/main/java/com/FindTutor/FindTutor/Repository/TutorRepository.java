@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface TutorRepository extends JpaRepository<Tutors, Integer> {
     // Lấy tất cả gia sư với thông tin người dùng
-    @Query(value = "SELECT t.ID, t.UserID, u.fullname, t.Gender, t.date_of_birth, " +
+    @Query(value = "SELECT t.ID, t.UserID, u.fullname, t.Gender, t.DateOfBirth, " +
             "t.Address, t.Qualification, t.Experience, t.Bio, t.Status, " +
             "STRING_AGG(s.subjectname, ',') AS subjects " +
             "FROM Tutors t " +
@@ -19,7 +19,7 @@ public interface TutorRepository extends JpaRepository<Tutors, Integer> {
             "LEFT JOIN Subjects s ON ts.SubjectID = s.ID " +
             "WHERE (:name IS NULL OR u.fullname LIKE %:name%) " +
             "AND (:subject IS NULL OR s.subjectname LIKE %:subject%) " +
-            "GROUP BY t.ID, t.UserID, u.fullname, t.Gender, t.date_of_birth, " +
+            "GROUP BY t.ID, t.UserID, u.fullname, t.Gender, t.DateOfBirth, " +
             "t.Address, t.Qualification, t.Experience, t.Bio, t.Status",
             nativeQuery = true)
     List<Object[]> getTutorsWithFilters(@Param("name") String name,
