@@ -32,6 +32,20 @@ public class Tutors {
     @Column(name = "Address", nullable = false)
     private String Address;
 
+
+    @Column(name = "UserID", nullable = false, unique = true)
+    private int userID;
+
+    @Column(name = "Gender", nullable = false)
+    private Boolean Gender; // true: Female, false: Male
+
+    @Column(name = "DateOfBirth", nullable = false)
+    private Date DateOfBirth;
+
+    @Column(name = "Address", nullable = false)
+    private String Address;
+
+
     @Column(name = "Qualification", nullable = false)
     private String Qualification;
 
@@ -46,6 +60,7 @@ public class Tutors {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "UserID", insertable = false, updatable = false)
+
     private Users user;
 
     // Quan hệ Many-to-Many với Subjects thông qua bảng liên kết TutorSubjects

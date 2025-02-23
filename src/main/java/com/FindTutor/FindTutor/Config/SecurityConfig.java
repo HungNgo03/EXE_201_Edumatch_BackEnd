@@ -30,11 +30,6 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
 
                         .requestMatchers("/users/**","Post/addPost","Post/getAllPost").permitAll()
-
-
-
-//                        .anyRequest().authenticated()
-
                         .anyRequest().permitAll()
 
                 )

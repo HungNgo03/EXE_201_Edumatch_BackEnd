@@ -1,9 +1,12 @@
 package com.FindTutor.FindTutor.Service;
 
 import com.FindTutor.FindTutor.Repository.TutorRepository;
+
+import com.FindTutor.FindTutor.DTO.TutorDTO;
+
 import com.FindTutor.FindTutor.dto.ScheduleDTO;
-import com.FindTutor.FindTutor.dto.TutorDTO;
 import com.FindTutor.FindTutor.dto.TutorDetailDTO;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -52,7 +55,9 @@ public class TutorService implements ITutorService {
     }
 
 
+
     @Transactional
+
     @Override
     public TutorDetailDTO getTutorDetail(int tutorId) {
         Object result = tutorRepository.getTutorDetailById(tutorId);
@@ -105,9 +110,5 @@ public class TutorService implements ITutorService {
 
         return new TutorDetailDTO(id, fullname, email, phoneNumber, gender, dateOfBirth, address, qualification, experience, bio, status, subjects, schedules);
     }
-
-
-
-
 
 }
