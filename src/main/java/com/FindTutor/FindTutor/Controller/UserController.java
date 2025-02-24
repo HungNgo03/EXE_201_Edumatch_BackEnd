@@ -164,8 +164,11 @@ public class UserController {
 
         return ResponseEntity.ok(Map.of(
                 "message", "Login Successful",
-                "userID", user.getID(),  // Trả về userID
+                "userID", user.getID(),
                 "username", user.getUsername(),
+                "fullname", user.getFullname(),
+                "phoneNumber",user.getPhoneNumber(),
+                "email", user.getEmail(),
                 "role", user.getRole()
         ));
     }

@@ -11,11 +11,13 @@ import com.FindTutor.FindTutor.Repository.UserRepository;
 
 import com.FindTutor.FindTutor.Response.EHttpStatus;
 import com.FindTutor.FindTutor.Response.Response;
+import com.FindTutor.FindTutor.Service.IClassService;
+import com.FindTutor.FindTutor.Service.IScheduleService;
 import com.FindTutor.FindTutor.Service.ITutorService;
 
 import com.FindTutor.FindTutor.DTO.TutorDTO;
 
-import com.FindTutor.FindTutor.dto.TutorDetailDTO;
+import com.FindTutor.FindTutor.DTO.TutorDetailDTO;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -36,26 +38,19 @@ public class TutorController {
     private ITutorService tutorService;
 
 
-    @Autowired
-    private IScheduleService scheduleService;
+//    @Autowired
+//    private IScheduleService IscheduleService;
 
     @Autowired
     private IClassService classService;
 
     // API lấy danh sách gia sư
-    @GetMapping("/getAll")
-    public Response<List<Tutors>> getAllTutors() {
-        return new Response<>(EHttpStatus.OK, tutorService.getAllTutors());
+//   @GetMapping("/getAll")
+//    public Response<List<Tutors>> getAllTutors() {
+//        return new Response<>(EHttpStatus.OK, tutorService.getAllTutors());
+//    }
 
-    // Lấy tất cả gia sư với các tham số lọc
-    @GetMapping("/getAllTutors")
-    public Response<List<TutorDTO>> getAllTutors(
-            @RequestParam(required = false) String name,
-            @RequestParam(required = false) String subject
-    ) {
-        List<TutorDTO> tutors = tutorService.getAllTutors(name, subject);
-        return new Response<>(EHttpStatus.OK, tutors);
-    }
+
 
     // API lấy chi tiết gia sư theo ID
     @GetMapping("/getTutorDetail/{tutorId}")
@@ -83,11 +78,11 @@ public class TutorController {
     // Lấy tất cả gia sư với các tham số lọc
     @GetMapping("/getAllTutors")
     public Response<List<TutorDTO>> getAllTutors(
-            @RequestParam(required = false) String name,
+           @RequestParam(required = false) String name,
             @RequestParam(required = false) String subject
     ) {
         List<TutorDTO> tutors = tutorService.getAllTutors(name, subject);
-        return new Response<>(EHttpStatus.OK, tutors);
+       return new Response<>(EHttpStatus.OK, tutors);
     }
 
 

@@ -18,8 +18,8 @@ public class Subjects {
     private int ID;
     private String subjectname;
     private String Description;
-    @ManyToMany(mappedBy = "subjects")
-    private List<Tutors> tutors;
+//    @ManyToMany(mappedBy = "subjects")
+//    private List<Tutors> tutors;
 
     public Subjects() {
     }

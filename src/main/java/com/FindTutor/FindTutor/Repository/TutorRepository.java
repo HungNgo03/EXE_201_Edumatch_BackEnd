@@ -9,10 +9,11 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface TutorRepository extends JpaRepository<Tutors, Integer> {
 
-    List<Tutors> findByStatus(int status);
+//    List<Tutors> findByStatus(int status);
     //Optional<Tutors> findByUserID(int userId);
 
     // Lấy tất cả gia sư với thông tin người dùng
