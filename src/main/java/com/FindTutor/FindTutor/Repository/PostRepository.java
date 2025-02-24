@@ -29,7 +29,7 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
     @Query("SELECT DISTINCT s.subjectname FROM Post p " +
             "JOIN Subjects s ON p.SubjectID = s.ID")
     List<String> getAllSubject();
-    @Query("SELECT new com.FindTutor.FindTutor.DTO.PostDTO(p.ID, p.UserID, u.fullname, p.SubjectID, s.subjectname, p.Title, p.Content, p.Rating, p.CreatedAt, p.UpdatedAt) " +
+    @Query("SELECT distinct new com.FindTutor.FindTutor.DTO.PostDTO(p.ID, p.UserID, u.fullname, p.SubjectID, s.subjectname, p.Title, p.Content, p.Rating, p.CreatedAt, p.UpdatedAt) " +
             "FROM Post p " +
             "JOIN Users u ON p.UserID = u.ID " +
             "JOIN Subjects s ON p.SubjectID = s.ID " +

@@ -2,12 +2,15 @@ package com.FindTutor.FindTutor.Controller;
 
 import com.FindTutor.FindTutor.DTO.PostDTO;
 import com.FindTutor.FindTutor.Entity.Post;
+import com.FindTutor.FindTutor.Entity.Users;
 import com.FindTutor.FindTutor.Response.EHttpStatus;
 import com.FindTutor.FindTutor.Response.Response;
 import com.FindTutor.FindTutor.Service.IPostService;
 import com.FindTutor.FindTutor.Service.PostService;
 import com.FindTutor.FindTutor.Service.UserService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,8 +27,10 @@ public class PostController {
     public Response<List<PostDTO>> getAllPost(){
         return new Response<>(EHttpStatus.OK, postService.getAllPost());
     }
+
     @PostMapping("/addPost")
-    public Response<?> addPost(@RequestBody Post post){
+    public Response<?> addPost(@RequestBody Post post) {
+
         return new Response<>(EHttpStatus.OK, postService.addPost(post));
     }
     @GetMapping("/findPostsByUsername")
@@ -45,5 +50,13 @@ public class PostController {
     public Response<List<PostDTO>> findPostsBySubjectAndUsername(@RequestParam String subjectname, @RequestParam String username) {
         List<PostDTO> postsBySubjectAndUsername = postService.findPostsBySubjectAndUsername(subjectname, username);
         return new Response<>(EHttpStatus.OK, postsBySubjectAndUsername);
+    }
+    @GetMapping("/getCurrentUser")
+    public Response<?> getCurrentUser(HttpSession session) {
+        Users user = (Users) session.getAttribute("user");
+        if (user == null) {
+            return new Response<>(EHttpStatus.UNAUTHORIZED, "User is not logged in");
+        }
+        return new Response<>(EHttpStatus.OK, "User is logged in");
     }
 }
