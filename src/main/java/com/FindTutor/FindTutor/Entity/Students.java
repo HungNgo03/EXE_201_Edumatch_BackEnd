@@ -14,10 +14,19 @@ public class Students {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int ID;
-    private int UserID;
+    @Column(name = "UserID", nullable = false, unique = true)
+    private int userID;
+
+    @Column(name = "ParentName")  // Thêm annotation này để tránh lỗi
     private String ParentName;
+
+    @Column(name = "Grade")
     private String Grade;
+
+    @Column(name = "Address")
     private String Address;
+
+    @Column(name = "Notes")
     private String Notes;
 
     public Students() {
@@ -25,7 +34,7 @@ public class Students {
 
     public Students(int ID, int userID, String parentName, String grade, String address, String notes) {
         this.ID = ID;
-        UserID = userID;
+        this.userID = userID;
         ParentName = parentName;
         Grade = grade;
         Address = address;
