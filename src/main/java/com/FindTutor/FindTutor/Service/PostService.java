@@ -16,9 +16,6 @@ public class PostService implements IPostService {
     private PostRepository postRepository;
     @Override
     public Post addPost(Post post) {
-        if (post.getRating() < 1 || post.getRating() > 5) {
-            throw new IllegalArgumentException("Rating must be between 1 and 5");
-        }
         post.setCreatedAt(LocalDateTime.now());
         post.setUpdatedAt(LocalDateTime.now());
 
