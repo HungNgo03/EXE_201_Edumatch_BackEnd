@@ -20,9 +20,6 @@ public class Tutors {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int ID;
 
-    @Column(name = "UserID", nullable = false)
-    private int UserID;
-
     @Column(name = "Gender", nullable = false)
     private Boolean Gender; // true: Female, false: Male
 
@@ -36,16 +33,6 @@ public class Tutors {
     @Column(name = "UserID", nullable = false, unique = true)
     private int userID;
 
-    @Column(name = "Gender", nullable = false)
-    private Boolean Gender; // true: Female, false: Male
-
-    @Column(name = "DateOfBirth", nullable = false)
-    private Date DateOfBirth;
-
-    @Column(name = "Address", nullable = false)
-    private String Address;
-
-
     @Column(name = "Qualification", nullable = false)
     private String Qualification;
 
@@ -58,18 +45,18 @@ public class Tutors {
     @Column(name = "Status")
     private int Status;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "UserID", insertable = false, updatable = false)
-
-    private Users user;
-
-    // Quan hệ Many-to-Many với Subjects thông qua bảng liên kết TutorSubjects
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(
-            name = "TutorSubjects",
-            joinColumns = @JoinColumn(name = "TutorID"),
-            inverseJoinColumns = @JoinColumn(name = "SubjectID")
-    )
-    private List<Subjects> subjects;
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "UserID", insertable = false, updatable = false)
+//
+//    private Users user;
+//
+//    // Quan hệ Many-to-Many với Subjects thông qua bảng liên kết TutorSubjects
+//    @ManyToMany(fetch = FetchType.LAZY)
+//    @JoinTable(
+//            name = "TutorSubjects",
+//            joinColumns = @JoinColumn(name = "TutorID"),
+//            inverseJoinColumns = @JoinColumn(name = "SubjectID")
+//    )
+//    private List<Subjects> subjects;
 
 }

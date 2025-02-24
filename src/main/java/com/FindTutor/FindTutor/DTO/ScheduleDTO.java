@@ -1,4 +1,4 @@
-package com.FindTutor.FindTutor.dto;
+package com.FindTutor.FindTutor.DTO;
 
 import lombok.Data;
 

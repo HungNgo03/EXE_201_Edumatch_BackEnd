@@ -17,13 +17,13 @@ public class TutorSubjects {
     private int TutorID;
     private int SubjectID;
 
-    @ManyToOne
-    @JoinColumn(name = "TutorID", referencedColumnName = "ID", insertable = false, updatable = false)
-    private Tutors tutor;
-
-    @ManyToOne
-    @JoinColumn(name = "SubjectID", referencedColumnName = "ID", insertable = false, updatable = false)
-    private Subjects subject;
+//    @ManyToOne
+//    @JoinColumn(name = "TutorID", referencedColumnName = "ID", insertable = false, updatable = false)
+//    private Tutors tutor;
+//
+//    @ManyToOne
+//    @JoinColumn(name = "SubjectID", referencedColumnName = "ID", insertable = false, updatable = false)
+//    private Subjects subject;
 
     public TutorSubjects() {
     }
