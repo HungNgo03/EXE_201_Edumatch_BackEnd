@@ -17,4 +17,5 @@ public interface IPostService {
     List<String> getAllSubject();
     List<SubjectDTO> getAllSubjectId();
     List<PostDTO> findPostsBySubjectAndUsername(String subjectname, String username);
+    List<SubjectDTO> getAllSubject2();
 }

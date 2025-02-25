@@ -66,4 +66,9 @@ public class PostService implements IPostService {
     public List<PostDTO> findPostsBySubjectAndUsername(String subjectname, String username) {
         return postRepository.findPostsBySubjectAndUsername(subjectname, username);
     }
+
+    @Override
+    public List<SubjectDTO> getAllSubject2() {
+        return postRepository.getAllSubject2();
+    }
 }

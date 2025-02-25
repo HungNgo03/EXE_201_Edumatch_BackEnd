@@ -26,6 +26,8 @@ public class Users {
     @Column(name = "phone_number")
     private String phoneNumber;
     private String Role;
+    @Column(name = "image")
+    private String image;
     @Column(name = "created_at")
     private Date CreatedAt;
 

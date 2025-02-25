@@ -43,7 +43,8 @@ public class Tutors {
 
     @Column(name = "Bio")
     private String Bio;
-
+    @Column(name = "bank_image")
+    private String bank_image;
     @Column(name = "Status")
     private int Status;
 
@@ -51,14 +52,5 @@ public class Tutors {
     @JoinColumn(name = "UserID", insertable = false, updatable = false)
 
     private Users user;
-
-    // Quan hệ Many-to-Many với Subjects thông qua bảng liên kết TutorSubjects
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(
-            name = "TutorSubjects",
-            joinColumns = @JoinColumn(name = "TutorID"),
-            inverseJoinColumns = @JoinColumn(name = "SubjectID")
-    )
-    private List<Subjects> subjects;
 
 }

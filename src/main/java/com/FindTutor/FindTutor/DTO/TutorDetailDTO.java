@@ -19,13 +19,13 @@ public class TutorDetailDTO {
     private String bio;
     private int status;
     private List<String> subjects; // Danh sách môn học
-    private List<com.FindTutor.FindTutor.dto.ScheduleDTO> schedule; // Lịch giảng dạy
+    private List<com.FindTutor.FindTutor.DTO.ScheduleDTO> schedule; // Lịch giảng dạy
 
     public TutorDetailDTO() {}
 
     public TutorDetailDTO(int id, String fullname, String email, String phoneNumber, boolean gender, Date dateOfBirth,
                           String address, String qualification, int experience, String bio, int status,
-                          List<String> subjects, List<com.FindTutor.FindTutor.dto.ScheduleDTO> schedule) {
+                          List<String> subjects, List<com.FindTutor.FindTutor.DTO.ScheduleDTO> schedule) {
         this.id = id;
         this.fullname = fullname;
         this.email = email;

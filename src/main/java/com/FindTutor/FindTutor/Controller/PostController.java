@@ -75,4 +75,8 @@ public class PostController {
         }
         return new Response<>(EHttpStatus.OK, "User is logged in");
     }
+    @GetMapping("/getAllSubject2")
+    public Response<List<SubjectDTO>> getAllSubject2(){
+        return new Response<>(EHttpStatus.OK, postService.getAllSubject2());
+    }
 }
