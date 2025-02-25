@@ -4,8 +4,8 @@ import com.FindTutor.FindTutor.Repository.TutorRepository;
 
 import com.FindTutor.FindTutor.DTO.TutorDTO;
 
-import com.FindTutor.FindTutor.dto.ScheduleDTO;
-import com.FindTutor.FindTutor.dto.TutorDetailDTO;
+import com.FindTutor.FindTutor.DTO.ScheduleDTO;
+import com.FindTutor.FindTutor.DTO.TutorDetailDTO;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
