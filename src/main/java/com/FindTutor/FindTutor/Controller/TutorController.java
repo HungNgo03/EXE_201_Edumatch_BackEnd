@@ -11,6 +11,8 @@ import com.FindTutor.FindTutor.Repository.UserRepository;
 
 import com.FindTutor.FindTutor.Response.EHttpStatus;
 import com.FindTutor.FindTutor.Response.Response;
+import com.FindTutor.FindTutor.Service.IClassService;
+import com.FindTutor.FindTutor.Service.IScheduleService;
 import com.FindTutor.FindTutor.Service.ITutorService;
 
 import com.FindTutor.FindTutor.DTO.TutorDTO;
@@ -36,60 +38,31 @@ public class TutorController {
     private ITutorService tutorService;
 
 
-    @Autowired
-    private IScheduleService scheduleService;
-
-    @Autowired
-    private IClassService classService;
-
-    // API lấy danh sách gia sư
-    @GetMapping("/getAll")
-    public Response<List<Tutors>> getAllTutors() {
-        return new Response<>(EHttpStatus.OK, tutorService.getAllTutors());
-
-    // Lấy tất cả gia sư với các tham số lọc
-    @GetMapping("/getAllTutors")
-    public Response<List<TutorDTO>> getAllTutors(
-            @RequestParam(required = false) String name,
-            @RequestParam(required = false) String subject
-    ) {
-        List<TutorDTO> tutors = tutorService.getAllTutors(name, subject);
-        return new Response<>(EHttpStatus.OK, tutors);
-    }
-
-    // API lấy chi tiết gia sư theo ID
-    @GetMapping("/getTutorDetail/{tutorId}")
-    public Response<TutorDetailDTO> getTutorDetail(@PathVariable int tutorId) {
-        TutorDetailDTO tutorDetail = tutorService.getTutorDetail(tutorId);
-
-        if (tutorDetail == null) {
-            return new Response<>(EHttpStatus.NOT_FOUND, "Tutor not found", null);
+        // Lấy tất cả gia sư với các tham số lọc
+        @GetMapping("/getAllTutors")
+        public Response<List<TutorDTO>> getAllTutors (
+                @RequestParam(required = false) String name,
+                @RequestParam(required = false) String subject
+    ){
+            List<TutorDTO> tutors = tutorService.getAllTutors(name, subject);
+            return new Response<>(EHttpStatus.OK, tutors);
         }
 
-        return new Response<>(EHttpStatus.OK, tutorDetail);
-    }
+        // API lấy chi tiết gia sư theo ID
+        @GetMapping("/getTutorDetail/{tutorId}")
+        public Response<TutorDetailDTO> getTutorDetail ( @PathVariable int tutorId){
+            TutorDetailDTO tutorDetail = tutorService.getTutorDetail(tutorId);
 
-    // API đăng ký học
-    @PostMapping("/registerClass")
-    public Response<Classes> registerClass(@RequestBody Classes classes) {
-        return new Response<>(EHttpStatus.OK, classService.registerClass(classes));
-    }
+            if (tutorDetail == null) {
+                return new Response<>(EHttpStatus.NOT_FOUND, "Tutor not found", null);
+            }
 
-    private UserRepository usersRepository;
-
-    @Autowired
-    private TutorRepository tutorsRepository;
-
-    // Lấy tất cả gia sư với các tham số lọc
-    @GetMapping("/getAllTutors")
-    public Response<List<TutorDTO>> getAllTutors(
-            @RequestParam(required = false) String name,
-            @RequestParam(required = false) String subject
-    ) {
-        List<TutorDTO> tutors = tutorService.getAllTutors(name, subject);
-        return new Response<>(EHttpStatus.OK, tutors);
+            return new Response<>(EHttpStatus.OK, tutorDetail);
+        }
     }
 
 
 
-}
+
+
+

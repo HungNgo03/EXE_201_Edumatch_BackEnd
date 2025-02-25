@@ -1,9 +1,12 @@
 package com.FindTutor.FindTutor.Service;
 
 import com.FindTutor.FindTutor.DTO.PostDTO;
+import com.FindTutor.FindTutor.DTO.SubjectDTO;
 import com.FindTutor.FindTutor.Entity.Post;
 import com.FindTutor.FindTutor.Repository.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -16,10 +19,22 @@ public class PostService implements IPostService {
     private PostRepository postRepository;
     @Override
     public Post addPost(Post post) {
-        post.setCreatedAt(LocalDateTime.now());
-        post.setUpdatedAt(LocalDateTime.now());
 
-        return postRepository.save(post);
+        Post newPost = new Post();
+        newPost.setUserID(post.getUserID());
+        newPost.setTitle(post.getTitle());
+        newPost.setContent(post.getContent());
+        newPost.setCreatedAt(LocalDateTime.now());
+        newPost.setUpdatedAt(LocalDateTime.now());
+        newPost.setRating(5);
+        newPost.setSubjectID(post.getSubjectID());
+        return postRepository.save(newPost);
+    }
+
+
+    @Override
+    public Page<PostDTO> getAllPost1(Pageable pageable) throws Exception {
+        return postRepository.getAll(pageable);
     }
 
     @Override
@@ -40,6 +55,11 @@ public class PostService implements IPostService {
     @Override
     public List<String> getAllSubject() {
         return postRepository.getAllSubject();
+    }
+
+    @Override
+    public List<SubjectDTO> getAllSubjectId() {
+        return postRepository.getAllSubjectId();
     }
 
     @Override

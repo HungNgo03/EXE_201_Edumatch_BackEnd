@@ -9,10 +9,11 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface TutorRepository extends JpaRepository<Tutors, Integer> {
 
-    List<Tutors> findByStatus(int status);
+//    List<Tutors> findByStatus(int status);
     //Optional<Tutors> findByUserID(int userId);
 
     // Lấy tất cả gia sư với thông tin người dùng
@@ -34,10 +35,7 @@ public interface TutorRepository extends JpaRepository<Tutors, Integer> {
     List<Object[]> getTutorsWithFilters(@Param("name") String name,
                                         @Param("subject") String subject);
 
-
     Optional<Tutors> findByUserID(int UserID);
-
-
 
     @Query(value = "SELECT t.ID, u.fullname, u.email, u.phone_number, t.Gender, " +
             "t.DateOfBirth, t.Address, t.Qualification, t.Experience, t.Bio, t.Status, " +
@@ -52,15 +50,10 @@ public interface TutorRepository extends JpaRepository<Tutors, Integer> {
             nativeQuery = true)
     Object getTutorDetailById(@Param("tutorId") int tutorId);
 
-
     @Query(value = "SELECT s.Date, s.StartTime, s.EndTime " +
             "FROM Schedules s " +
             "JOIN Classes c ON s.ClassID = c.ID " +
             "WHERE c.TutorID = :tutorId", nativeQuery = true)
     List<Object[]> getTutorSchedule(@Param("tutorId") int tutorId);
-
-
-
-
 
 }

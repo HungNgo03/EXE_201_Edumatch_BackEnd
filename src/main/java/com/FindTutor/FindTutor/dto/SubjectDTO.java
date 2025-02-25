@@ -3,7 +3,12 @@ package com.FindTutor.FindTutor.DTO;
 
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
+
+@Setter
+@Getter
 @Data
 public class SubjectDTO {
     private int ID;
@@ -17,30 +22,12 @@ public class SubjectDTO {
         this.description = description;
     }
 
-    public SubjectDTO() {
-    }
-
-    public int getID() {
-        return ID;
-    }
-
-    public void setID(int ID) {
+    public SubjectDTO(int ID, String subjectname) {
         this.ID = ID;
-    }
-
-    public String getSubjectname() {
-        return subjectname;
-    }
-
-    public void setSubjectname(String subjectname) {
         this.subjectname = subjectname;
     }
 
-    public String getDescription() {
-        return description;
+    public SubjectDTO() {
     }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
 }

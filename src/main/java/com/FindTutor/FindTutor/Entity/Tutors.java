@@ -20,8 +20,7 @@ public class Tutors {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int ID;
 
-    @Column(name = "UserID", nullable = false)
-    private int UserID;
+
 
     @Column(name = "Gender", nullable = false)
     private Boolean Gender; // true: Female, false: Male
@@ -35,16 +34,6 @@ public class Tutors {
 
     @Column(name = "UserID", nullable = false, unique = true)
     private int userID;
-
-    @Column(name = "Gender", nullable = false)
-    private Boolean Gender; // true: Female, false: Male
-
-    @Column(name = "DateOfBirth", nullable = false)
-    private Date DateOfBirth;
-
-    @Column(name = "Address", nullable = false)
-    private String Address;
-
 
     @Column(name = "Qualification", nullable = false)
     private String Qualification;

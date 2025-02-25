@@ -29,8 +29,8 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
 
-                        .requestMatchers("/users/profile","/users/login", "/users/register","Post/**").permitAll()
-                        .anyRequest().authenticated()
+                        .requestMatchers("/users/profile","/users/login", "/users/register","Post/**", "tutor/**", "api/**", "subject/**").permitAll()
+                        .anyRequest().permitAll()
                 )
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED))
