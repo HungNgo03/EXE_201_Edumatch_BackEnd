@@ -29,14 +29,13 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
 
-                        .requestMatchers("/users/profile","/users/login", "/users/register","Post/**", "tutor/**", "api/**", "subject/**").permitAll()
+                        .requestMatchers("/users/**","Post/addPost","Post/getAllPost","/tutor/**","class/**").permitAll()
                         .anyRequest().permitAll()
                 )
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED))
                 .formLogin(form -> form.permitAll())
-                .logout(logout -> logout.permitAll())
-                ;
+                .logout(logout -> logout.permitAll());
 
         return http.build();
     }
