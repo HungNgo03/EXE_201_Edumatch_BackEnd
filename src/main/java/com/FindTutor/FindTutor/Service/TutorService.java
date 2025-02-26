@@ -89,10 +89,10 @@ public class TutorService implements ITutorService {
         int status = ((Number) row[10]).intValue();
         String subjectsString = (String) row[11];
 
-        // Kiểm tra NULL trước khi dùng
+
         List<String> subjects = subjectsString != null ? Arrays.asList(subjectsString.split(",")) : new ArrayList<>();
 
-        // Lấy lịch giảng dạy
+
         List<Object[]> scheduleResults = tutorRepository.getTutorSchedule(tutorId);
         List<ScheduleDTO> schedules = new ArrayList<>();
 
@@ -101,9 +101,10 @@ public class TutorService implements ITutorService {
         for (Object[] scheduleRow : scheduleResults) {
             Date scheduleDate = (Date) scheduleRow[0];
 
-            // Chuyển đổi Time sang String
+
             String startTime = (scheduleRow[1] instanceof Time) ? timeFormat.format((Time) scheduleRow[1]) : (String) scheduleRow[1];
             String endTime = (scheduleRow[2] instanceof Time) ? timeFormat.format((Time) scheduleRow[2]) : (String) scheduleRow[2];
+
 
             schedules.add(new ScheduleDTO(scheduleDate, startTime, endTime));
         }

@@ -12,11 +12,6 @@ import java.util.List;
 import java.util.Optional;
 
 public interface TutorRepository extends JpaRepository<Tutors, Integer> {
-
-//    List<Tutors> findByStatus(int status);
-    //Optional<Tutors> findByUserID(int userId);
-
-    // Lấy tất cả gia sư với thông tin người dùng
     @Query(value = "SELECT t.ID, t.UserID, u.fullname, t.Gender, t.DateOfBirth, " +
 
             "t.Address, t.Qualification, t.Experience, t.Bio, t.Status, " +

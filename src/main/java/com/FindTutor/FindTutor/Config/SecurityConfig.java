@@ -30,6 +30,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
 
                         .requestMatchers("/users/**","Post/addPost","Post/getAllPost","/tutor/**","class/**").permitAll()
+//                        .requestMatchers("/api/student/getSchedule/**").authenticated()
                         .anyRequest().permitAll()
                 )
                 .sessionManagement(session -> session
