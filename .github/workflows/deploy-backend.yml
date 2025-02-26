@@ -21,7 +21,7 @@ jobs:
 
       - name: Build Spring Boot App
         run: |
-          cd backend
+          cd home/deploy/backend/ 
           ./mvnw clean package -DskipTests
           mv target/*.jar backend.jar
 
