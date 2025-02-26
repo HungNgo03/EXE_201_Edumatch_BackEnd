@@ -88,7 +88,7 @@ public class TutorService implements ITutorService {
         String bio = (String) row[9];
         int status = ((Number) row[10]).intValue();
         String subjectsString = (String) row[11];
-
+        double money_per_slot = ((Number) row[12]).doubleValue();
         // Kiểm tra NULL trước khi dùng
         List<String> subjects = subjectsString != null ? Arrays.asList(subjectsString.split(",")) : new ArrayList<>();
 
@@ -108,7 +108,7 @@ public class TutorService implements ITutorService {
             schedules.add(new ScheduleDTO(scheduleDate, startTime, endTime));
         }
 
-        return new TutorDetailDTO(id, fullname, email, phoneNumber, gender, dateOfBirth, address, qualification, experience, bio, status, subjects, schedules);
+        return new TutorDetailDTO(id, fullname, email, phoneNumber, gender, dateOfBirth, address, qualification, experience, bio, status,money_per_slot, subjects, schedules);
     }
 
 }

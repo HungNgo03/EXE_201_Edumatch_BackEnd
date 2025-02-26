@@ -47,7 +47,8 @@ public class Tutors {
     private String bank_image;
     @Column(name = "Status")
     private int Status;
-
+    @Column(name = "money_per_slot")
+    private double money_per_slot;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "UserID", insertable = false, updatable = false)
 
