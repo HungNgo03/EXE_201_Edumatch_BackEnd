@@ -57,7 +57,7 @@ jobs:
           echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan 157.66.24.154 >> ~/.ssh/known_hosts
-          mv -v /target/FindTutor-0.0.1-SNAPSHOT.jar.original target/FindTutor-0.0.1-SNAPSHOT.jar || echo "File not found!"
+          mv -v $(pwd)/target/FindTutor-0.0.1-SNAPSHOT.jar.original $(pwd)/target/FindTutor-0.0.1-SNAPSHOT.jar || echo "File not found!"
           # Sao chép JAR file lên VPS
           scp $(pwd)/target/*.jar root@157.66.24.154:/home/deploy/backend/
 
