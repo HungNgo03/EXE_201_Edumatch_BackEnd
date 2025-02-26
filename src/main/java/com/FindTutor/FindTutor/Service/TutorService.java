@@ -90,6 +90,8 @@ public class TutorService implements ITutorService {
         String subjectsString = (String) row[11];
         double money_per_slot = ((Number) row[12]).doubleValue();
         // Kiểm tra NULL trước khi dùng
+
+
         List<String> subjects = subjectsString != null ? Arrays.asList(subjectsString.split(",")) : new ArrayList<>();
 
         // Lấy lịch giảng dạy
