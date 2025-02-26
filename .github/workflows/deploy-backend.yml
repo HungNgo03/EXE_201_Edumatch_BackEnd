@@ -48,11 +48,6 @@ jobs:
       # Checkout lại mã nguồn
       - name: Checkout repository
         uses: actions/checkout@v2
-      - name: Rename JAR file
-        run: |
-          mv /home/runner/work/EXE_201_Edumatch_BackEnd/EXE_201_Edumatch_BackEnd/target/FindTutor-0.0.1-SNAPSHOT.jar.original /home/runner/work/EXE_201_Edumatch_BackEnd/EXE_201_Edumatch_BackEnd/target/FindTutor-0.0.1-SNAPSHOT.jar
-          echo "Renamed file:"
-          ls -lh target/
       # Tải và cấu hình SSH để triển khai lên VPS
       - name: Set up SSH and deploy to VPS
         env:
@@ -62,7 +57,7 @@ jobs:
           echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan 157.66.24.154 >> ~/.ssh/known_hosts
-          
+          pwd
           # Sao chép JAR file lên VPS
           scp target/FindTutor-0.0.1-SNAPSHOT.jar root@157.66.24.154:/home/deploy/backend/
 
