@@ -17,7 +17,7 @@ jobs:
       # Build Docker image
       - name: Build Docker image
         run: |
-          docker build -t myusername/findtutor:$GITHUB_SHA .
+          docker build -t kienbeo237/findtutor:$GITHUB_SHA .
 
       # Đăng nhập vào Docker Hub (hoặc GitHub Container Registry)
       - name: Log in to Docker Hub
@@ -29,7 +29,7 @@ jobs:
       # Push Docker image lên Docker Hub
       - name: Push Docker image
         run: |
-          docker push myusername/findtutor:$GITHUB_SHA
+          docker push kienbeo237/findtutor:$GITHUB_SHA
 
   deploy:
     runs-on: ubuntu-latest
@@ -45,10 +45,10 @@ jobs:
           key: ${{ secrets.VPS_SSH_KEY }}
           script: |
             # Kéo Docker image từ Docker Hub
-            docker pull myusername/findtutor:$GITHUB_SHA
+            docker pull kienbeo237/findtutor:$GITHUB_SHA
             # Dừng container cũ nếu có
             docker stop findtutor || true
             # Xóa container cũ
             docker rm findtutor || true
             # Chạy container mới
-            docker run -d --name findtutor -p 8080:8080 myusername/findtutor:$GITHUB_SHA
+            docker run -d --name findtutor -p 8080:8080 kienbeo237/findtutor:$GITHUB_SHA
