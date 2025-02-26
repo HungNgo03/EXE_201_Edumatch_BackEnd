@@ -47,3 +47,17 @@ jobs:
           dockerfile: Dockerfile
           push: true
           tags: ${{ secrets.DOCKER_USERNAME }}/rest-api:v1.0.0
+      - name: SSH into VPS and deploy the docker container
+        uses: appleboy/ssh-action@v0.1.5
+        with:
+          host: ${{ secrets.VPS_IP }}
+          username: ${{ secrets.VPS_USERNAME }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          script: |
+            # Pull the latest Docker image from Docker Hub
+            docker pull ${{ secrets.DOCKER_USERNAME }}/rest-api:latest
+            # Stop and remove the existing container if it's running
+            docker stop rest-api || true
+            docker rm rest-api || true
+            # Run the container with port mapping and detach mode
+            docker run -d --name rest-api -p 8080:8080 ${{ secrets.DOCKER_USERNAME }}/rest-api:latest
