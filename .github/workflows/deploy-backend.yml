@@ -60,7 +60,7 @@ jobs:
           ssh-keyscan your_vps_ip >> ~/.ssh/known_hosts
           
           # Sao chép JAR file lên VPS
-          scp target/FindTutor-0.0.1-SNAPSHOT.jar user@${{ secrets.SSH_PORT }}:/home/deploy/backend
+          scp target/FindTutor-0.0.1-SNAPSHOT.jar user@157.66.24.154:/home/deploy/backend
 
           # SSH vào VPS và chạy ứng dụng
-          ssh user@${{ secrets.SSH_PORT }} "nohup java -jar /home/deploy/backend/FindTutor-0.0.1-SNAPSHOT.jar > /home/user/output.log 2>&1 &"
+          ssh user@157.66.24.154 "nohup java -jar /home/deploy/backend/FindTutor-0.0.1-SNAPSHOT.jar > /home/deploy/output.log 2>&1 &"
