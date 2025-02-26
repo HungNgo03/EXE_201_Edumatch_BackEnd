@@ -60,7 +60,7 @@ jobs:
           ssh-keyscan 157.66.24.154 >> ~/.ssh/known_hosts
           
           # Sao chép JAR file lên VPS
-          scp $(pwd)/target/*.jar user@157.66.24.154:/home/deploy/backend/
+          scp EXE_201_Edumatch_BackEnd/target/FindTutor-0.0.1-SNAPSHOT.jar user@157.66.24.154:/home/deploy/backend
 
           # SSH vào VPS và chạy ứng dụng
           ssh user@157.66.24.154 "nohup java -jar /home/deploy/backend/FindTutor-0.0.1-SNAPSHOT.jar > /home/deploy/output.log 2>&1 &"
