@@ -1,54 +1,49 @@
-name: CI/CD with Docker
-
+name: build and deploy spring-api
 on:
   push:
     branches:
-      - main  # Chạy workflow khi có thay đổi trên nhánh main
+      - main
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-
+  build-deploy:
+    name: build and deploy spring-api
+    runs-on: ubuntu-20.04
     steps:
-      # Checkout code từ repository
-      - name: Checkout code
+      - name: checkout code
         uses: actions/checkout@v3
 
-      # Build Docker image
-      - name: Build Docker image
-        run: |
-          docker build -t kienbeo237/findtutor:$GITHUB_SHA .
+      - name: setup jdk 17
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'corretto'
+          java-version: 17
 
-      # Đăng nhập vào Docker Hub (hoặc GitHub Container Registry)
-      - name: Log in to Docker Hub
-        uses: docker/login-action@v2
+      - name: unit tests
+        run: mvn -B test --file pom.xml
+
+      - name: build the app
+        run: |
+          mvn clean
+          mvn -B package --file pom.xml
+
+      - name: build the docker image
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          dockerfile: Dockerfile
+          push: false
+          tags: ${{ secrets.DOCKER_USERNAME }}/rest-api:v1.0.0
+
+      - name: login to docker hub
+        uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      # Push Docker image lên Docker Hub
-      - name: Push Docker image
-        run: |
-          docker push kienbeo237/findtutor:$GITHUB_SHA
-
-  deploy:
-    runs-on: ubuntu-latest
-    needs: build
-
-    steps:
-      # SSH vào VPS và kéo Docker image mới
-      - name: SSH to VPS and deploy
-        uses: appleboy/ssh-action@v0.1.5
+      - name: push the docker image to docker hub
+        uses: docker/build-push-action@v4
         with:
-          host: ${{ secrets.VPS_IP }}
-          username: ${{ secrets.VPS_USERNAME }}
-          key: ${{ secrets.VPS_SSH_KEY }}
-          script: |
-            # Kéo Docker image từ Docker Hub
-            docker pull kienbeo237/findtutor:$GITHUB_SHA
-            # Dừng container cũ nếu có
-            docker stop findtutor || true
-            # Xóa container cũ
-            docker rm findtutor || true
-            # Chạy container mới
-            docker run -d --name findtutor -p 8080:8080 kienbeo237/findtutor:$GITHUB_SHA
+          context: .
+          dockerfile: Dockerfile
+          push: true
+          tags: ${{ secrets.DOCKER_USERNAME }}/rest-api:v1.0.0
