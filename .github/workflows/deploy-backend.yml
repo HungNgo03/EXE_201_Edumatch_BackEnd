@@ -35,7 +35,7 @@ jobs:
 
       # Build với Maven
       - name: Build with Maven
-        run: mvn clean package -DskipTests
+        run: mvn clean package -X
 
       # (Tùy chọn) Chạy Unit Test
       - name: Run Tests
@@ -59,7 +59,7 @@ jobs:
           ssh-keyscan 157.66.24.154 >> ~/.ssh/known_hosts
           mv -v $(pwd)/target/FindTutor-0.0.1-SNAPSHOT.jar.original $(pwd)/target/FindTutor-0.0.1-SNAPSHOT.jar || echo "File not found!"
           # Sao chép JAR file lên VPS
-          scp $(pwd)/target/*.jar root@157.66.24.154:/home/deploy/backend/
+          scp target/FindTutor-0.0.1-SNAPSHOT.jar root@157.66.24.154:/home/deploy/backend/
 
           # SSH vào VPS và chạy ứng dụng
           ssh root@157.66.24.154 "nohup java -jar /home/deploy/backend/FindTutor-0.0.1-SNAPSHOT.jar > /home/deploy/output.log 2>&1 &"
