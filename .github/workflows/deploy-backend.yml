@@ -35,7 +35,7 @@ jobs:
 
       # Build với Maven
       - name: Build with Maven
-        run: mvn clean install -DskipTests=true
+        run: mvn clean package -DskipTests
 
       # (Tùy chọn) Chạy Unit Test
       - name: Run Tests
@@ -48,15 +48,6 @@ jobs:
       # Checkout lại mã nguồn
       - name: Checkout repository
         uses: actions/checkout@v2
-
-      - name: Debug JAR file location
-        run: |
-          echo "Current working directory:"
-          pwd
-          echo "Listing target directory:"
-          ls -lh target/
-          echo "Listing Maven repository directory:"
-          ls -lh /home/runner/.m2/repository/com/FindTutor/FindTutor/0.0.1-SNAPSHOT/
 
       # Tải và cấu hình SSH để triển khai lên VPS
       - name: Set up SSH and deploy to VPS
