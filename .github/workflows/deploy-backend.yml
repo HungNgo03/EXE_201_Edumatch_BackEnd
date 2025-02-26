@@ -48,7 +48,11 @@ jobs:
       # Checkout lại mã nguồn
       - name: Checkout repository
         uses: actions/checkout@v2
-
+      - name: Rename JAR file
+        run: |
+          mv target/FindTutor-0.0.1-SNAPSHOT.jar.original target/FindTutor-0.0.1-SNAPSHOT.jar
+          echo "Renamed file:"
+          ls -lh target/
       # Tải và cấu hình SSH để triển khai lên VPS
       - name: Set up SSH and deploy to VPS
         env:
