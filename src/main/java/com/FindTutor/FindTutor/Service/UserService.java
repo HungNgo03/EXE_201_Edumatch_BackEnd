@@ -6,6 +6,7 @@ import com.FindTutor.FindTutor.Entity.Users;
 //import com.FindTutor.FindTutor.Repository.StudentRepository;
 import com.FindTutor.FindTutor.Repository.TutorRepository;
 import com.FindTutor.FindTutor.Repository.UserRepository;
+import jakarta.persistence.Id;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -55,4 +56,15 @@ public class UserService {
     public boolean existsByEmail(String Email) {
         return userRepository.existsByEmail(Email);
     }
+    public boolean existsByUsername2(String Username, int Id) {
+        return userRepository.existsByUsername2(Username, Id);
+    }
+    public boolean existsByPhoneNumber2(String PhoneNumber,int Id) {
+        return userRepository.existsByPhoneNumber2(PhoneNumber, Id);
+    }
+
+    public boolean existsByEmail2(String Email, int Id) {
+        return userRepository.existsByEmail2(Email, Id);
+    }
+
 }
