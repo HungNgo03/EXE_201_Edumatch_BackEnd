@@ -1,14 +1,23 @@
 package com.FindTutor.FindTutor.Controller;
 
+import com.FindTutor.FindTutor.DTO.ChangePasswordRequest;
+import com.FindTutor.FindTutor.DTO.UpdateRequest;
 import com.FindTutor.FindTutor.Entity.Students;
 import com.FindTutor.FindTutor.Entity.Tutors;
 import com.FindTutor.FindTutor.Entity.Users;
 import com.FindTutor.FindTutor.DTO.LoginRequest;
 import com.FindTutor.FindTutor.Repository.StudentRepository;
 import com.FindTutor.FindTutor.Repository.TutorRepository;
+import com.FindTutor.FindTutor.Repository.UserRepository;
+import com.FindTutor.FindTutor.Response.EHttpStatus;
+import com.FindTutor.FindTutor.Response.Response;
 import com.FindTutor.FindTutor.Service.OtpService;
 import com.FindTutor.FindTutor.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 
 
@@ -22,11 +31,21 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.Map;
 import java.util.Optional;
+import java.util.UUID;
 
-@CrossOrigin(origins = "http://127.0.0.1:5500",allowCredentials = "true")
+@CrossOrigin(origins = "http://localhost:63342/",allowCredentials = "true")
 @RestController
 @RequestMapping("/users")
 public class UserController {
@@ -42,6 +61,9 @@ public class UserController {
 
     @Autowired
     private TutorRepository tutorRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
     @Autowired
     private StudentRepository studentRepository;
@@ -114,6 +136,7 @@ public class UserController {
         newUser.setEmail(request.getEmail());
         newUser.setPhoneNumber(request.getPhoneNumber());
         newUser.setRole(request.getRole());
+        newUser.setCreatedAt(new Date());
 
         Users savedUser = userService.registerUser(newUser); // Lưu vào DB
 
@@ -207,5 +230,157 @@ public class UserController {
     public ResponseEntity<?> logoutUser(HttpSession session) {
         session.invalidate();
         return ResponseEntity.ok("Logged out successfully");
+    }
+
+    private static final String UPLOAD_DIR = "uploads/"; // Thư mục lưu ảnh
+
+    @PutMapping("/update-image/{id}")
+    public ResponseEntity<String> updateUserImage(@PathVariable int id, @RequestParam("file") MultipartFile file) {
+        Optional<Users> userOptional = userRepository.findById(id);
+        if (userOptional.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+        }
+
+        Users user = userOptional.get();
+
+        try {
+            // Xóa ảnh cũ nếu có
+            if (user.getImage() != null) {
+                File oldFile = new File(UPLOAD_DIR + user.getImage());
+                if (oldFile.exists() && oldFile.isFile()) {
+                    oldFile.delete(); // Xóa file ảnh cũ
+                }
+            }
+
+            // Lưu ảnh mới vào thư mục uploads
+            String fileName = UUID.randomUUID() + "_" + file.getOriginalFilename();
+            Path filePath = Paths.get(UPLOAD_DIR + fileName);
+            Files.write(filePath, file.getBytes());
+
+            // Cập nhật ảnh mới vào database
+            user.setImage(fileName);
+            userRepository.save(user);
+
+            return ResponseEntity.ok("Image updated successfully: " + fileName);
+        } catch (IOException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error saving image");
+        }
+    }
+
+    @GetMapping("/image/{id}")
+    public ResponseEntity<Resource> getUserImage(@PathVariable int id) {
+        try {
+            // Tìm user trong database
+            Users user = userRepository.findById(id).orElse(null);
+            if (user == null || user.getImage() == null) {
+                return ResponseEntity.notFound().build();
+            }
+
+            // Đường dẫn đến ảnh
+            Path filePath = Paths.get(UPLOAD_DIR + user.getImage());
+            Resource resource = new UrlResource(filePath.toUri());
+
+            if (resource.exists() || resource.isReadable()) {
+                // Xác định loại file ảnh
+                String contentType = Files.probeContentType(filePath);
+                return ResponseEntity.ok()
+                        .contentType(MediaType.parseMediaType(contentType))
+                        .body(resource);
+            } else {
+                return ResponseEntity.notFound().build();
+            }
+        } catch (IOException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+    @PutMapping("/change-password")
+    public ResponseEntity<?> changePassword(@RequestBody ChangePasswordRequest request) {
+        Optional<Users> userOptional = userRepository.findById(request.getId());
+        if (userOptional.isEmpty()) {
+            return ResponseEntity.badRequest().body("User không tồn tại");
+        }
+
+        Users user = userOptional.get();
+        if (!passwordEncoder.matches(request.getOldPassword(), user.getPasswordHash())) {
+            return ResponseEntity.badRequest().body("Mật khẩu cũ không chính xác");
+        }
+
+        user.setPasswordHash(passwordEncoder.encode(request.getNewPassword()));
+        userRepository.save(user);
+
+        return ResponseEntity.ok("Mật khẩu đã được cập nhật thành công");
+    }
+
+
+    @PutMapping("/update-profile/{id}")
+    public Response<?> updateUserInfo(@PathVariable int id, @RequestBody UpdateRequest request) {
+        Optional<Users> userOptional = userRepository.findById(id);
+        if (userOptional.isEmpty()) {
+            return new Response<>(EHttpStatus.NOT_FOUND,"User không tồn tại");
+        }
+        if (userService.existsByUsername2(request.getUsername(), id)) {
+            return new Response<>(EHttpStatus.ALREADY_EXISTS,"Username '"  + "' already taken");
+        }
+        if (userService.existsByEmail2(request.getEmail(),id)) {
+            return new Response<>(EHttpStatus.ALREADY_EXISTS,"Email already in use");
+        }
+        if (userService.existsByPhoneNumber2(request.getPhoneNumber(),id)) {
+            return new Response<>(EHttpStatus.ALREADY_EXISTS,"Phone number already in use");
+        }
+
+        Users user = userOptional.get();
+
+        // Cập nhật thông tin người dùng
+        user.setUsername(request.getUsername());
+        user.setFullname(request.getFullname());
+        user.setEmail(request.getEmail());
+        user.setPhoneNumber(request.getPhoneNumber());
+        user.setRole(request.getRole());
+
+        userRepository.save(user);
+
+        // Nếu là Tutor -> cập nhật trong bảng Tutors
+        if ("Tutor".equalsIgnoreCase(request.getRole())) {
+            Optional<Tutors> tutorOptional = tutorRepository.findByUserID(id);
+            if (tutorOptional.isPresent()) {
+                Tutors tutor = tutorOptional.get();
+                tutor.setGender(request.getGender());
+                tutor.setDateOfBirth(request.getDateOfBirth());
+                tutor.setAddress(request.getAddress());
+                tutor.setQualification(request.getQualification());
+                tutor.setExperience(request.getExperience());
+                tutor.setBio(request.getBio());
+                tutorRepository.save(tutor);
+            }
+        }
+
+        // Nếu là Student -> cập nhật trong bảng Students
+        if ("Student".equalsIgnoreCase(request.getRole())) {
+            Optional<Students> studentOptional = studentRepository.findByUserID(id);
+            if (studentOptional.isPresent()) {
+                Students student = studentOptional.get();
+                student.setParentName(request.getParentName());
+                student.setGrade(request.getGrade());
+                student.setAddress(request.getAddress());
+                student.setNotes(request.getNotes());
+                studentRepository.save(student);
+            }
+        }
+        return new Response<>(EHttpStatus.OK,"Cập nhật thành công");
+    }
+    @GetMapping("/user/{id}")
+    public ResponseEntity<?> getUser(@PathVariable int id) {
+
+            // Tìm user trong database
+            Optional<Users> userOptional = userService.findById(id);
+            if (userOptional == null ) {
+                return ResponseEntity.notFound().build();
+            }
+            Users user = userOptional.get();
+
+            return ResponseEntity.ok(user);
+
+
+
     }
 }
