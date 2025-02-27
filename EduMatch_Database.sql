@@ -136,7 +136,6 @@ CREATE TABLE ClassRegistrations (
                                     PreferredSchedule NVARCHAR(255) NULL,
                                     FOREIGN KEY (StudentID) REFERENCES Students(ID) ON DELETE NO ACTION,
                                     FOREIGN KEY (ClassID) REFERENCES Classes(ID) ON DELETE NO ACTION,
-                                    UNIQUE (StudentID, ClassID)
 );
 INSERT INTO Users (username, password_hash, fullname, Email, phone_number, Role, image)
 VALUES

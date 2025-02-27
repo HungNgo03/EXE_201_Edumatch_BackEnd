@@ -50,5 +50,5 @@ public interface TutorRepository extends JpaRepository<Tutors, Integer> {
             "JOIN Classes c ON s.ClassID = c.ID " +
             "WHERE c.TutorID = :tutorId", nativeQuery = true)
     List<Object[]> getTutorSchedule(@Param("tutorId") int tutorId);
-
+    Tutors getTutorsByID(int ID);
 }
