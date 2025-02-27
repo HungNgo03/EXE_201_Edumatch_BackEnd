@@ -7,7 +7,5 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 @Repository
 public interface ClassRegistrationRepository extends JpaRepository<ClassRegistrations,Long> {
-    List<ClassRegistrations> findByStatus(String status);
-
-    List<ClassRegistrations> findByStudentId(Long studentId);
+    ClassRegistrations getClassRegistrationsByID(int Id);
 }

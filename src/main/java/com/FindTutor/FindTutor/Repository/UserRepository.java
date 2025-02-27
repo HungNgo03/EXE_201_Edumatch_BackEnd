@@ -22,4 +22,5 @@ public interface UserRepository extends JpaRepository<Users, Integer> {
     boolean existsByEmail2(@Param("Email")String email, @Param("id")int id);
     @Query(value = "SELECT CASE WHEN EXISTS(SELECT 1 FROM Users WHERE phone_number = :phone_number AND id != :id)THEN CAST(1 AS BIT) ELSE CAST(0 AS BIT) END", nativeQuery = true)
     boolean existsByPhoneNumber2(@Param("phone_number")String phoneNumber, @Param("id")int id);
+    Users getUsersByID(int Id);
 }
