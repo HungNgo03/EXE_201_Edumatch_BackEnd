@@ -1,5 +1,7 @@
 package com.FindTutor.FindTutor.Controller;
 
+import com.FindTutor.FindTutor.DTO.PaymentQrDTO;
+import com.FindTutor.FindTutor.DTO.PaymentQrResponse;
 import com.FindTutor.FindTutor.Entity.ClassRegistrations;
 import com.FindTutor.FindTutor.Response.EHttpStatus;
 import com.FindTutor.FindTutor.Response.Response;
@@ -17,8 +19,8 @@ public class ClassRegistrationController {
     @Autowired
     private IClassRegistrationService classRegistrationService;
     @PostMapping("/register")
-    public Response<?> registerStudent(@RequestBody ClassRegistrationRequestDTO request) {
-        classRegistrationService.registerStudent(request);
-        return new Response<>(EHttpStatus.OK,"Registration request received!");
+    public Response<PaymentQrResponse> registerStudent(@RequestBody ClassRegistrationRequestDTO request) {
+        PaymentQrResponse response = classRegistrationService.registerStudent(request);
+        return new Response<>(EHttpStatus.OK,response);
     }
 }

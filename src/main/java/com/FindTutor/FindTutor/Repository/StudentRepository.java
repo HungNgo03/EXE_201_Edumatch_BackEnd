@@ -10,7 +10,7 @@ import java.util.Optional;
 
 public interface StudentRepository extends JpaRepository<Students, Integer> {
     Optional<Students> findByUserID(int UserID);
-
+    Students getStudentsByUserID(int userId);
 
     @Query(value = "SELECT s.Date, s.StartTime, s.EndTime, c.ClassName, sub.subjectname " +
             "FROM Schedules s " +
