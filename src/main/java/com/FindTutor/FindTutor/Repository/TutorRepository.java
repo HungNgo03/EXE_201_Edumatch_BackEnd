@@ -54,5 +54,6 @@ public interface TutorRepository extends JpaRepository<Tutors, Integer> {
     @Query("SELECT new com.FindTutor.FindTutor.DTO.TutorDTO(u.Role,u.username,u.email, t.Status, t.Bio, t.Experience, t.Qualification, t.Address, t.DateOfBirth, t.Gender, u.fullname, t.userID,t.ID) " +
             "FROM Tutors t JOIN t.user u")
     List<TutorDTO> findAllTutor();
-    
+
+    Tutors getTutorsByID(int tutorId);
 }
