@@ -199,3 +199,42 @@ SET money_per_slot = CASE ID
                          WHEN 17 THEN 100000 -- Đặng Quỳnh Anh
     END
 WHERE ID IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17);
+INSERT INTO Subjects (subjectname, Description) VALUES
+                                                    (N'Toán học', N'Môn học về số học, đại số, hình học và giải tích.'),
+                                                    (N'Ngữ văn', N'Học về văn học Việt Nam và thế giới, ngữ pháp, và kỹ năng viết.'),
+                                                    (N'Tiếng Anh', N'Môn học về ngôn ngữ tiếng Anh, bao gồm ngữ pháp, từ vựng và giao tiếp.'),
+                                                    (N'Lịch sử', N'Nghiên cứu về lịch sử Việt Nam và thế giới.'),
+                                                    (N'Địa lý', N'Tìm hiểu về địa lý tự nhiên, kinh tế và chính trị của Việt Nam và thế giới.'),
+                                                    (N'Vật lý', N'Học về cơ học, nhiệt học, điện từ học, quang học và vật lý hạt nhân.'),
+                                                    (N'Hóa học', N'Nghiên cứu về các chất, phản ứng hóa học và ứng dụng trong cuộc sống.'),
+                                                    (N'Sinh học', N'Tìm hiểu về cơ thể sống, sinh thái và môi trường.'),
+                                                    (N'Giáo dục công dân', N'Học về đạo đức, pháp luật, công dân và xã hội.'),
+                                                    (N'Tin học', N'Nghiên cứu về máy tính, lập trình và công nghệ thông tin.'),
+                                                    (N'Công nghệ', N'Môn học về kỹ thuật, sản xuất và ứng dụng công nghệ trong đời sống.'),
+                                                    (N'Giáo dục thể chất', N'Rèn luyện thể lực, kỹ năng vận động và lối sống lành mạnh.'),
+                                                    (N'Âm nhạc', N'Học về nhạc lý, cảm thụ âm nhạc và thực hành biểu diễn.'),
+                                                    (N'Mỹ thuật', N'Nghiên cứu về hội họa, điêu khắc và nghệ thuật tạo hình.'),
+                                                    (N'Giáo dục quốc phòng', N'Học về an ninh, quốc phòng và kỹ năng quân sự cơ bản.');
+INSERT INTO TutorSubjects (TutorID, SubjectID)
+VALUES
+    (1, 1), -- Trần Thiên Hương - Toán
+    (2, 1), -- Bùi Thị Linh Đan - Toán
+    (2, 2), -- Bùi Thị Linh Đan - Lý
+    (3, 1), -- Nguyễn Thị Mai - Toán
+    (3, 4), -- Nguyễn Thị Mai - Anh
+    (4, 4), -- Nguyễn Quế Chi - Anh
+    (5, 1), -- Hà Minh Quân - Toán
+    (6, 1), -- Vương Thị Thanh Thủy - Toán
+    (6, 4), -- Vương Thị Thanh Thủy - Anh
+    (7, 1), -- Nguyễn Thị Quyết Tâm - Toán
+    (7, 4), -- Nguyễn Thị Quyết Tâm - Anh
+    (8, 4), -- Trương Ngọc Ánh - Anh
+    (9, 3), -- Đinh Ngọc Khôi - Hóa
+    (10, 4), -- Bùi Quang Huy - Anh
+    (11, 4), -- Đinh Tiến Đạt - Anh
+    (12, 4), -- Nguyễn Thái Đức - Anh
+    (13, 1), -- Đỗ Tiến Dũng - Toán
+    (14, 1), -- Trần Thị Thanh Trang - Toán
+    (15, 1), -- Phạm Ngọc Hà - Toán
+    (16, 4), -- Dương Quỳnh Trang - Anh
+    (17, 5); -- Đặng Quỳnh Anh - Trung

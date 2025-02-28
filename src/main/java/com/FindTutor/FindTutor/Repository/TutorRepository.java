@@ -1,5 +1,6 @@
 package com.FindTutor.FindTutor.Repository;
 
+import com.FindTutor.FindTutor.DTO.TutorDTO;
 import com.FindTutor.FindTutor.Entity.Tutors;
 
 import com.FindTutor.FindTutor.Entity.Users;
@@ -50,5 +51,8 @@ public interface TutorRepository extends JpaRepository<Tutors, Integer> {
             "JOIN Classes c ON s.ClassID = c.ID " +
             "WHERE c.TutorID = :tutorId", nativeQuery = true)
     List<Object[]> getTutorSchedule(@Param("tutorId") int tutorId);
-
+    @Query("SELECT new com.FindTutor.FindTutor.DTO.TutorDTO(u.Role,u.username,u.email, t.Status, t.Bio, t.Experience, t.Qualification, t.Address, t.DateOfBirth, t.Gender, u.fullname, t.userID,t.ID) " +
+            "FROM Tutors t JOIN t.user u")
+    List<TutorDTO> findAllTutor();
+    
 }
