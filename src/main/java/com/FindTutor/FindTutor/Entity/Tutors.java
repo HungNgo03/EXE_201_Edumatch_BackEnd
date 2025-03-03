@@ -11,10 +11,13 @@ import java.sql.Date;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Data
 @Entity
 @Table(name = "Tutors")
+
 public class Tutors {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -47,7 +50,8 @@ public class Tutors {
     private String bank_image;
     @Column(name = "Status")
     private int Status;
-
+    @Column(name = "money_per_slot")
+    private double money_per_slot;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "UserID", insertable = false, updatable = false)
 

@@ -21,5 +21,5 @@ public class TutorAvailability {
     private int DayOfWeek;
     private String StartTime;
     private String EndTime;
-    private int Status;
+    private String Status;
 }

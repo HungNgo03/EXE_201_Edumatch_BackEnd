@@ -11,4 +11,5 @@ public class ClassRegistrationRequestDTO {
     private String subjectId;
     private String grade;
     private String preferredSchedule;
+    private int tutorId;
 }

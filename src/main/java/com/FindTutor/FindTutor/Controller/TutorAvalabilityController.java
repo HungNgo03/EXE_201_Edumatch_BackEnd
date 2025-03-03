@@ -15,8 +15,8 @@ import java.util.List;
 public class TutorAvalabilityController {
     @Autowired
     private ITutorAvailabilityService availabilityService;
-    @GetMapping("getAvalabilityByTutorId")
-    public Response<List<TutorAvailability>> getAvailabilityByTutorId(@RequestParam int tutorId){
+    @GetMapping("getAvalabilityByTutorId/{tutorId}")
+    public Response<List<TutorAvailability>> getAvailabilityByTutorId(@PathVariable int tutorId){
         return new Response<>(EHttpStatus.OK, availabilityService.getAvailability(tutorId));
     }
 

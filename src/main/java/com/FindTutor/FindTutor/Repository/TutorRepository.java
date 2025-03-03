@@ -1,5 +1,6 @@
 package com.FindTutor.FindTutor.Repository;
 
+import com.FindTutor.FindTutor.DTO.TutorDTO;
 import com.FindTutor.FindTutor.Entity.Tutors;
 
 import com.FindTutor.FindTutor.Entity.Users;
@@ -34,14 +35,14 @@ public interface TutorRepository extends JpaRepository<Tutors, Integer> {
 
     @Query(value = "SELECT t.ID, u.fullname, u.email, u.phone_number, t.Gender, " +
             "t.DateOfBirth, t.Address, t.Qualification, t.Experience, t.Bio, t.Status, " +
-            "STRING_AGG(s.subjectname, ',') AS subjects " +
+            "STRING_AGG(s.subjectname, ',') AS subjects ,t.money_per_slot " +
             "FROM Tutors t " +
             "JOIN Users u ON t.UserID = u.ID " +
             "LEFT JOIN TutorSubjects ts ON t.ID = ts.TutorID " +
             "LEFT JOIN Subjects s ON ts.SubjectID = s.ID " +
             "WHERE t.ID = :tutorId " +
             "GROUP BY t.ID, u.fullname, u.email, u.phone_number, t.Gender, " +
-            "t.DateOfBirth, t.Address, t.Qualification, t.Experience, t.Bio, t.Status",
+            "t.DateOfBirth, t.Address, t.Qualification, t.Experience, t.Bio, t.Status,t.money_per_slot",
             nativeQuery = true)
     Object getTutorDetailById(@Param("tutorId") int tutorId);
 
@@ -52,7 +53,9 @@ public interface TutorRepository extends JpaRepository<Tutors, Integer> {
             "JOIN Subjects sub ON c.SubjectID = sub.ID " +
             "WHERE t.UserID = :tutorId", nativeQuery = true)
     List<Object[]> getTutorSchedule(@Param("tutorId") int tutorId);
+    @Query("SELECT new com.FindTutor.FindTutor.DTO.TutorDTO(u.Role,u.username,u.email, t.Status, t.Bio, t.Experience, t.Qualification, t.Address, t.DateOfBirth, t.Gender, u.fullname, t.userID,t.ID) " +
+            "FROM Tutors t JOIN t.user u")
+    List<TutorDTO> findAllTutor();
 
-
-
+    Tutors getTutorsByID(int tutorId);
 }
