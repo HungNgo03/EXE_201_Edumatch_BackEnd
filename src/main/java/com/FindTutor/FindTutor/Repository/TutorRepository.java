@@ -45,10 +45,14 @@ public interface TutorRepository extends JpaRepository<Tutors, Integer> {
             nativeQuery = true)
     Object getTutorDetailById(@Param("tutorId") int tutorId);
 
-    @Query(value = "SELECT s.Date, s.StartTime, s.EndTime " +
+    @Query(value = "SELECT s.Date, s.StartTime, s.EndTime, c.ClassName, sub.subjectname " +
             "FROM Schedules s " +
             "JOIN Classes c ON s.ClassID = c.ID " +
-            "WHERE c.TutorID = :tutorId", nativeQuery = true)
+            "JOIN Tutors t ON c.TutorID = t.ID " +
+            "JOIN Subjects sub ON c.SubjectID = sub.ID " +
+            "WHERE t.UserID = :tutorId", nativeQuery = true)
     List<Object[]> getTutorSchedule(@Param("tutorId") int tutorId);
+
+
 
 }
