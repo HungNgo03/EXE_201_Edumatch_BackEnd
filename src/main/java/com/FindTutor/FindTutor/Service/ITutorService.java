@@ -1,6 +1,7 @@
 package com.FindTutor.FindTutor.Service;
 
 
+import com.FindTutor.FindTutor.DTO.ScheduleDTO;
 import com.FindTutor.FindTutor.DTO.TutorDTO;
 
 
@@ -12,4 +13,5 @@ import java.util.List;
 public interface ITutorService {
     List<TutorDTO> getAllTutors(String name, String subject);
     TutorDetailDTO getTutorDetail(int tutorId);
+    List<ScheduleDTO> getTutorSchedule(int tutorId);
 }

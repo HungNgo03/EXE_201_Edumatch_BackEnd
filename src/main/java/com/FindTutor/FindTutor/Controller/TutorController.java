@@ -1,5 +1,6 @@
 package com.FindTutor.FindTutor.Controller;
 
+import com.FindTutor.FindTutor.DTO.ScheduleDTO;
 import com.FindTutor.FindTutor.Entity.Classes;
 import com.FindTutor.FindTutor.Entity.Tutors;
 
@@ -32,34 +33,44 @@ import java.util.Optional;
 
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("/tutor")
+@RequestMapping("/api/tutor")
 public class TutorController {
     @Autowired
     private ITutorService tutorService;
 
 
-        // Lấy tất cả gia sư với các tham số lọc
-        @GetMapping("/getAllTutors")
-        public Response<List<TutorDTO>> getAllTutors (
-                @RequestParam(required = false) String name,
-                @RequestParam(required = false) String subject
-    ){
-            List<TutorDTO> tutors = tutorService.getAllTutors(name, subject);
-            return new Response<>(EHttpStatus.OK, tutors);
-        }
-
-        // API lấy chi tiết gia sư theo ID
-        @GetMapping("/getTutorDetail/{tutorId}")
-        public Response<TutorDetailDTO> getTutorDetail ( @PathVariable int tutorId){
-            TutorDetailDTO tutorDetail = tutorService.getTutorDetail(tutorId);
-
-            if (tutorDetail == null) {
-                return new Response<>(EHttpStatus.NOT_FOUND, "Tutor not found", null);
-            }
-
-            return new Response<>(EHttpStatus.OK, tutorDetail);
-        }
+    // Lấy tất cả gia sư với các tham số lọc
+    @GetMapping("/getAllTutors")
+    public Response<List<TutorDTO>> getAllTutors(
+            @RequestParam(required = false) String name,
+            @RequestParam(required = false) String subject
+    ) {
+        List<TutorDTO> tutors = tutorService.getAllTutors(name, subject);
+        return new Response<>(EHttpStatus.OK, tutors);
     }
+
+    // API lấy chi tiết gia sư theo ID
+    @GetMapping("/getTutorDetail/{tutorId}")
+    public Response<TutorDetailDTO> getTutorDetail(@PathVariable int tutorId) {
+        TutorDetailDTO tutorDetail = tutorService.getTutorDetail(tutorId);
+
+        if (tutorDetail == null) {
+            return new Response<>(EHttpStatus.NOT_FOUND, "Tutor not found", null);
+        }
+
+        return new Response<>(EHttpStatus.OK, tutorDetail);
+    }
+
+    @GetMapping("/getSchedule/{userId}")
+    public List<ScheduleDTO> getTutorSchedule(@PathVariable int userId) {
+        return tutorService.getTutorSchedule(userId);
+    }
+
+
+
+
+
+}
 
 
 
