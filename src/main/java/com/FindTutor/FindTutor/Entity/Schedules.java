@@ -21,10 +21,6 @@ public class Schedules {
     @JoinColumn(name = "ClassID", referencedColumnName = "ID", nullable = false)
     private Classes classes;
 
-    @ManyToOne
-    @JoinColumn(name = "TutorID", referencedColumnName = "ID", nullable = false)
-    private Tutors tutor;
-
     @Column(nullable = false)
     private Date date;
 
