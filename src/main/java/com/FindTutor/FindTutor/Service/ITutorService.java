@@ -13,4 +13,5 @@ import java.util.List;
 public interface ITutorService {
     List<TutorDTO> getAllTutors(String name, String subject);
     List<ScheduleDTO> getTutorSchedule(int tutorId);
+    TutorDetailDTO getTutorDetail(int tutorId);
 }
