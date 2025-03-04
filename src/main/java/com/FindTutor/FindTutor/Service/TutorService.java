@@ -40,14 +40,14 @@ public class TutorService implements ITutorService {
             Date dateOfBirth = (Date) row[4];
             String address = (String) row[5];
             String qualification = (String) row[6];
-            int exp = (int) row[7];  // Kinh nghiệm
+            int experience = (int) row[7];
             String bio = (String) row[8];
             int status = (int) row[9];
-            String subjectsString = (String) row[10];
+            String image = (String) row[10];
+            String subjectsString = (String) row[11];
+            List<String> subjects = subjectsString.isEmpty() ? new ArrayList<>() : Arrays.asList(subjectsString.split(","));
 
-            List<String> subjects = Arrays.asList(subjectsString.split(","));
-
-            TutorDTO tutor = new TutorDTO(id, userID, fullname, gender, dateOfBirth, address, qualification, exp, bio, status, subjects);
+            TutorDTO tutor = new TutorDTO(id, userID, fullname, gender, dateOfBirth, address, qualification, experience, bio, status, image, subjects);
             tutors.add(tutor);
         }
 
@@ -57,60 +57,24 @@ public class TutorService implements ITutorService {
 
 
     @Transactional
-
     @Override
-    public TutorDetailDTO getTutorDetail(int tutorId) {
-        Object result = tutorRepository.getTutorDetailById(tutorId);
-
-        if (result == null) {
-            return null; // Trả về null nếu không có dữ liệu
-        }
-
-        // Ép kiểu chính xác: result là một Object[], nên ta cần lấy từng phần tử
-        Object[] row = (Object[]) result;
-
-        int id = ((Number) row[0]).intValue();
-        String fullname = (String) row[1];
-        String email = (String) row[2];
-        String phoneNumber = (String) row[3];
-
-        boolean gender;
-        if (row[4] instanceof Boolean) {
-            gender = (Boolean) row[4];
-        } else {
-            gender = ((Number) row[4]).intValue() == 1;
-        }
-
-        Date dateOfBirth = (Date) row[5];
-        String address = (String) row[6];
-        String qualification = (String) row[7];
-        int experience = ((Number) row[8]).intValue();
-        String bio = (String) row[9];
-        int status = ((Number) row[10]).intValue();
-        String subjectsString = (String) row[11];
-        double money_per_slot = ((Number) row[12]).doubleValue();
-        // Kiểm tra NULL trước khi dùng
-
-
-        List<String> subjects = subjectsString != null ? Arrays.asList(subjectsString.split(",")) : new ArrayList<>();
-
-        // Lấy lịch giảng dạy
+    public List<ScheduleDTO> getTutorSchedule(int tutorId) {
+        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
         List<Object[]> scheduleResults = tutorRepository.getTutorSchedule(tutorId);
-        List<ScheduleDTO> schedules = new ArrayList<>();
-
-        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss"); // Format chuẩn
+        List<ScheduleDTO> scheduleDTOs = new ArrayList<>();
 
         for (Object[] scheduleRow : scheduleResults) {
-            Date scheduleDate = (Date) scheduleRow[0];
-
-            // Chuyển đổi Time sang String
+            java.sql.Date scheduleDate = (Date) scheduleRow[0];
             String startTime = (scheduleRow[1] instanceof Time) ? timeFormat.format((Time) scheduleRow[1]) : (String) scheduleRow[1];
             String endTime = (scheduleRow[2] instanceof Time) ? timeFormat.format((Time) scheduleRow[2]) : (String) scheduleRow[2];
+            String className = (String) scheduleRow[3];
+            String subjectName = (String) scheduleRow[4];
 
-            schedules.add(new ScheduleDTO(scheduleDate, startTime, endTime));
+            scheduleDTOs.add(new ScheduleDTO(scheduleDate, startTime, endTime, className, subjectName));
         }
-
-        return new TutorDetailDTO(id, fullname, email, phoneNumber, gender, dateOfBirth, address, qualification, experience, bio, status,money_per_slot, subjects, schedules);
+        return scheduleDTOs;
     }
+
+
 
 }

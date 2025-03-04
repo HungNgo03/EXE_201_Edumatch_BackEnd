@@ -7,7 +7,9 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.Date;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Data
 @Getter
 @Setter
