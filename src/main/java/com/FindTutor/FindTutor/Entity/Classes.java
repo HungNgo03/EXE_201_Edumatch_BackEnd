@@ -1,5 +1,8 @@
 package com.FindTutor.FindTutor.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.Getter;
@@ -17,18 +20,22 @@ public class Classes {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-
+    @Column(name = "ClassName")
+    private String className;
+    @Column(name = "MaxStudents")
+    private int maxStudent;
     @ManyToOne
     @JoinColumn(name = "TutorID", nullable = false)
     private Tutors tutor;
 
-    @ManyToOne
-    @JoinColumn(name = "StudentID", nullable = false)
-    private Students student;
-
-    @ManyToOne
-    @JoinColumn(name = "SubjectID", nullable = false)
-    private Subjects subject;
+    @ManyToMany
+    @JsonManagedReference
+    @JoinTable(
+            name = "ClassStudents",
+            joinColumns = @JoinColumn(name = "ClassID"),
+            inverseJoinColumns = @JoinColumn(name = "StudentID")
+    )
+    private List<Students> student;
 
     @Column(nullable = false)
     private Date startDate;

@@ -1,14 +1,20 @@
 package com.FindTutor.FindTutor.Entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @Data
 @Getter
 @Setter
 @Entity
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Table(name = "Students")
 public class Students {
     @Id
@@ -28,7 +34,14 @@ public class Students {
 
     @Column(name = "Notes")
     private String Notes;
-
+    @ManyToMany
+    @JsonBackReference
+    @JoinTable(
+            name = "ClassStudents",
+            joinColumns = @JoinColumn(name = "StudentID"),
+            inverseJoinColumns = @JoinColumn(name = "ClassID")
+    )
+    private List<Classes> classes;
     public Students() {
     }
 

@@ -20,4 +20,5 @@ public interface StudentRepository extends JpaRepository<Students, Integer> {
             "JOIN Subjects sub ON c.SubjectID = sub.ID " +
             "WHERE st.UserID = :studentId", nativeQuery = true)
     List<Object[]> getStudentSchedule(@Param("studentId") int studentId);
+    Students getStudentsByID(int id);
 }
