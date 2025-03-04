@@ -14,22 +14,20 @@ import java.util.Optional;
 
 public interface TutorRepository extends JpaRepository<Tutors, Integer> {
     @Query(value = "SELECT t.ID, t.UserID, u.fullname, t.Gender, t.DateOfBirth, " +
-
-            "t.Address, t.Qualification, t.Experience, t.Bio, t.Status, " +
-            "STRING_AGG(s.subjectname, ',') AS subjects " +
+            "t.Address, t.Qualification, t.Experience, t.Bio, t.Status, u.image, " +
+            "COALESCE(STRING_AGG(s.subjectname, ','), '') AS subjects " +
             "FROM Tutors t " +
             "JOIN Users u ON t.UserID = u.ID " +
             "LEFT JOIN TutorSubjects ts ON t.ID = ts.TutorID " +
             "LEFT JOIN Subjects s ON ts.SubjectID = s.ID " +
             "WHERE (:name IS NULL OR u.fullname LIKE %:name%) " +
             "AND (:subject IS NULL OR s.subjectname LIKE %:subject%) " +
-
             "GROUP BY t.ID, t.UserID, u.fullname, t.Gender, t.DateOfBirth, " +
-
-            "t.Address, t.Qualification, t.Experience, t.Bio, t.Status",
+            "t.Address, t.Qualification, t.Experience, t.Bio, t.Status, u.image",
             nativeQuery = true)
     List<Object[]> getTutorsWithFilters(@Param("name") String name,
                                         @Param("subject") String subject);
+
 
     Optional<Tutors> findByUserID(int UserID);
 

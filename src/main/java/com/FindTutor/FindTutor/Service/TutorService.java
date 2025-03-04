@@ -40,19 +40,21 @@ public class TutorService implements ITutorService {
             Date dateOfBirth = (Date) row[4];
             String address = (String) row[5];
             String qualification = (String) row[6];
-            int exp = (int) row[7];  // Kinh nghiệm
+            int experience = (int) row[7];
             String bio = (String) row[8];
             int status = (int) row[9];
-            String subjectsString = (String) row[10];
+            String image = (String) row[10];
+            String subjectsString = (String) row[11];
+            List<String> subjects = subjectsString.isEmpty() ? new ArrayList<>() : Arrays.asList(subjectsString.split(","));
 
-            List<String> subjects = Arrays.asList(subjectsString.split(","));
-
-            TutorDTO tutor = new TutorDTO(id, userID, fullname, gender, dateOfBirth, address, qualification, exp, bio, status, subjects);
+            TutorDTO tutor = new TutorDTO(id, userID, fullname, gender, dateOfBirth, address, qualification, experience, bio, status, image, subjects);
             tutors.add(tutor);
         }
 
         return tutors;
     }
+
+
 
     @Transactional
     @Override
