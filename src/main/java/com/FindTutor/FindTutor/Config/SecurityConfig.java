@@ -29,7 +29,7 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
 
-                        .requestMatchers("/users/**","Post/addPost","Post/getAllPost","/tutor/**","class/**").permitAll()
+                        .requestMatchers("/users/**","Post/addPost","Post/getAllPost","/tutor/**","class/**","chat/**","/chat-websocket/**").permitAll()
 //                        .requestMatchers("/api/student/getSchedule/**").authenticated()
                         .anyRequest().permitAll()
                 )
