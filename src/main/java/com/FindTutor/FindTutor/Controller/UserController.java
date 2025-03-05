@@ -42,7 +42,7 @@ import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.util.*;
 
-@CrossOrigin(origins = "http://edumatch.click/",allowCredentials = "true")
+@CrossOrigin(origins = "http://edumatch.click",allowCredentials = "true")
 @RestController
 @RequestMapping("/users")
 public class UserController {
