@@ -45,7 +45,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
-@CrossOrigin(origins = "http://edumatch.click/",allowCredentials = "true")
+@CrossOrigin(origins = "http://edumatch.click",allowCredentials = "true")
 @RestController
 @RequestMapping("/users")
 public class UserController {
