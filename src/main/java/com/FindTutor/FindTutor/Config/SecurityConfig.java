@@ -29,7 +29,7 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
 
-                        .requestMatchers("/users/**","Post/addPost","Post/getAllPost","/tutor/**","class/**").permitAll()
+                        .requestMatchers("/users/**","Post/addPost","Post/getAllPost","/tutor/**","class/**","chat/**","/chat-websocket/**").permitAll()
 //                        .requestMatchers("/api/student/getSchedule/**").authenticated()
                         .anyRequest().permitAll()
                 )
@@ -44,7 +44,7 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedOrigins(List.of("http://127.0.0.1:5500/,http://157.66.24.154,http://edumatch.click")); // Cho phép frontend
+        config.setAllowedOrigins(List.of("http://127.0.0.1:5500/","http://157.66.24.154","http://edumatch.click")); // Cho phép frontend
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         config.setAllowCredentials(true); // Cho phép gửi credentials (cookie, session)
         config.setAllowedHeaders(List.of("Authorization", "Cache-Control", "Content-Type"));

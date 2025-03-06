@@ -40,12 +40,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
-import java.util.Date;
-import java.util.Map;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
-@CrossOrigin(origins = "http://localhost:63342/",allowCredentials = "true")
+@CrossOrigin(origins = "http://edumatch.click",allowCredentials = "true")
 @RestController
 @RequestMapping("/users")
 public class UserController {
@@ -382,5 +379,9 @@ public class UserController {
 
 
 
+    }
+    @GetMapping("/all")
+    public List<Users> getAllUsers() {
+        return userRepository.findAll();
     }
 }
