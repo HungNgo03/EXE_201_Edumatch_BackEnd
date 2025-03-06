@@ -18,6 +18,7 @@ public class TutorDetailDTO {
     private int experience;
     private String bio;
     private int status;
+    private String image;
     private double money_per_slot;
     private List<String> subjects; // Danh sách môn học
     private List<com.FindTutor.FindTutor.DTO.ScheduleDTO> schedule; // Lịch giảng dạy
@@ -26,7 +27,7 @@ public class TutorDetailDTO {
 
     public TutorDetailDTO(int id, String fullname, String email, String phoneNumber, boolean gender, Date dateOfBirth,
                           String address, String qualification, int experience, String bio, int status,double money_per_slot,
-                          List<String> subjects, List<com.FindTutor.FindTutor.DTO.ScheduleDTO> schedule) {
+                          List<String> subjects, List<com.FindTutor.FindTutor.DTO.ScheduleDTO> schedule,String image) {
         this.id = id;
         this.fullname = fullname;
         this.email = email;
@@ -41,5 +42,6 @@ public class TutorDetailDTO {
         this.subjects = subjects;
         this.schedule = schedule;
         this.money_per_slot = money_per_slot;
+        this.image = image;
     }
 }

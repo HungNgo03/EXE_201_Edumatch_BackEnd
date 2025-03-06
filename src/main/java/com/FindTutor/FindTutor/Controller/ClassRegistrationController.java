@@ -30,7 +30,7 @@ public class ClassRegistrationController {
     public Response<?> getRegistration(@PathVariable int userId) {
         List<ClassRegistrationDetailsDTO> classRegistrationDetailsDTOS = classRegistrationService.getRegistration((userId));
         if (classRegistrationDetailsDTOS == null) return new Response<>(EHttpStatus.OK, "Không có lớp học đăng ký");
-        return new Response<>(EHttpStatus.OK, classRegistrationService.getRegistration(userId));
+        return new Response<>(EHttpStatus.OK, classRegistrationDetailsDTOS);
     }
     @GetMapping("/getPaymentQr/{regisId}")
     public Response<?> getQr(@PathVariable int regisId){
@@ -44,5 +44,18 @@ public class ClassRegistrationController {
     @GetMapping("/getClassDetail/{className}")
     public Response<?> getClassList(@PathVariable String className) {
         return new Response<>(EHttpStatus.OK, classService.getClassByClassName(className));
+    }
+    @PostMapping("/createClass")
+    public  Response<?> createNewClass(@RequestBody CreateClassRequestDTO dto){
+        classRegistrationService.createNewClass(dto);
+        return new Response<>(EHttpStatus.OK,"ok");
+    }
+    @PostMapping("/acceptRegister")
+    public  Response<?> acceptResgister(@RequestBody String className){
+        return null;
+    }
+    @GetMapping("/rejectRegister")
+    public Response<?> rejectRegister(@PathVariable int registerId){
+        return null;
     }
 }

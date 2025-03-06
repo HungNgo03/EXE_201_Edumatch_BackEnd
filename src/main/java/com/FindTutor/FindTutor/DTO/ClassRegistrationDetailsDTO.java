@@ -14,8 +14,10 @@ public class ClassRegistrationDetailsDTO {
     private String paymentStatus;
     private LocalDateTime registerAt;
     private String grade;
+    private String stdName;
 
-    public ClassRegistrationDetailsDTO(Long id,String subjectId, String status, String preferredSchedule, String tutorName, LocalDateTime registerAt, String grade,String paymentStatus) {
+    public ClassRegistrationDetailsDTO(String stdName,Long id,String subjectId, String status, String preferredSchedule, String tutorName, LocalDateTime registerAt, String grade,String paymentStatus) {
+        this.stdName = stdName;
         this.id = id;
         this.subjectId = subjectId;
         this.status = status;
