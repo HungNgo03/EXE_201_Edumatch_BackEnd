@@ -100,7 +100,7 @@ public class ClassRegistrationService implements IClassRegistrationService {
         String accountNo = "1020052412003";
         LocalDateTime regisAt = classRegistrations.getRegisteredAt();
         int month = regisAt.getMonthValue();
-        String description = user.getUsername() + " hoc phi mon " + classRegistrations.getSubject() + " thang "+month+" " + registrationId;
+        String description = user.getUsername() + " hoc phi " + " thang "+month+" " + registrationId;
         String qrUrl = "https://img.vietqr.io/image/" + bankId + "-" + accountNo + "-print.png?amount=" + totalPrice + "&addInfo=" + description + "&accountName=" + accountName;
         return qrUrl;
     }
