@@ -94,12 +94,12 @@ public class ClassRegistrationService implements IClassRegistrationService {
         Tutors tutors = tutorRepository.getTutorsByID(classRegistrations.getTutorId());
         Students std = studentRepository.getStudentsByID(classRegistrations.getStudentId());
         Users user = userRepository.getUsersByID(std.getUserID());
-        double totalPrice = tutors.getMoney_per_slot() * 10;
+        double totalPrice = tutors.getMoney_per_slot() * 8;
         String accountName = "Tran Tuan Minh";
         String bankId = "MB";
         String accountNo = "1020052412003";
         LocalDate month = LocalDate.now();
-        String description = user.getUsername() + " hoc phi mon " + classRegistrations.getSubject() + " " + registrationId;
+        String description = user.getUsername() + " hoc phi mon " + classRegistrations.getSubject() + " thang "+month+" " + registrationId;
         String qrUrl = "https://img.vietqr.io/image/" + bankId + "-" + accountNo + "-print.png?amount=" + totalPrice + "&addInfo=" + description + "&accountName=" + accountName;
         return qrUrl;
     }
