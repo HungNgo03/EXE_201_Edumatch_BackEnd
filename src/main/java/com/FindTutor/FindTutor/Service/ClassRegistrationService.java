@@ -59,6 +59,9 @@ public class ClassRegistrationService implements IClassRegistrationService {
             Tutors tutor = tutorRepository.getTutorsByUserID(userId);
             classRegistrationsList = registrationRepository.getClassRegistrationsByTutorId(tutor.getID());
         }
+        if (user.getRole().equals("Admin")) {
+            classRegistrationsList = registrationRepository.getAllClassRegistration();
+        }
         if (classRegistrationsList == null || classRegistrationsList.isEmpty()) {
            return null;
         }
