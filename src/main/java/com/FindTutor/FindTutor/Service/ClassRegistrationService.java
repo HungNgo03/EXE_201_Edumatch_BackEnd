@@ -8,10 +8,7 @@ import com.FindTutor.FindTutor.DTO.ClassRegistrationRequestDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.DayOfWeek;
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.time.ZoneId;
+import java.time.*;
 import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import java.util.Date;
@@ -101,7 +98,8 @@ public class ClassRegistrationService implements IClassRegistrationService {
         String accountName = "Tran Tuan Minh";
         String bankId = "MB";
         String accountNo = "1020052412003";
-        LocalDate month = LocalDate.now();
+        LocalDateTime regisAt = classRegistrations.getRegisteredAt();
+        int month = regisAt.getMonthValue();
         String description = user.getUsername() + " hoc phi mon " + classRegistrations.getSubject() + " thang "+month+" " + registrationId;
         String qrUrl = "https://img.vietqr.io/image/" + bankId + "-" + accountNo + "-print.png?amount=" + totalPrice + "&addInfo=" + description + "&accountName=" + accountName;
         return qrUrl;
