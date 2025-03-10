@@ -29,7 +29,7 @@ public class Users {
     private String phoneNumber;
     private String Role;
     @Column(name = "image")
-    private String image;
+    private byte[] image;
     @Column(name = "created_at")
     private Date CreatedAt;
 
