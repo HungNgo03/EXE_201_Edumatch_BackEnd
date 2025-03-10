@@ -362,4 +362,18 @@ public class UserController {
     public List<Users> getAllUsers() {
         return userRepository.findAll();
     }
+
+    @GetMapping("/tutor/image/{id}")
+    public ResponseEntity<String> getTutorImage(@PathVariable int id) {
+        Users tutor = userRepository.findById(id).orElse(null);
+        if (tutor == null || tutor.getImage() == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        // Chuyển byte[] thành Base64 string
+        String base64Image = "data:image/jpeg;base64," + Base64.getEncoder().encodeToString(tutor.getImage());
+
+        return ResponseEntity.ok(base64Image);
+    }
+
 }
