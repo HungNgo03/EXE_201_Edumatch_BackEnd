@@ -10,4 +10,8 @@ import java.util.List;
 public interface ChatMessageRepository extends JpaRepository<ChatMessage, Long> {
     @Query("SELECT m FROM ChatMessage m WHERE (m.sender = :sender AND m.receiver = :receiver) OR (m.sender = :receiver AND m.receiver = :sender) ORDER BY m.timestamp ASC")
     List<ChatMessage> findChatHistory(@Param("sender") String sender, @Param("receiver") String receiver);
+
+    @Query("SELECT DISTINCT CASE WHEN m.sender = 'admin' THEN m.receiver ELSE m.sender END " +
+            "FROM ChatMessage m WHERE m.sender = 'admin' OR m.receiver = 'admin'")
+    List<String> findChattedUsersForAdmin();
 }

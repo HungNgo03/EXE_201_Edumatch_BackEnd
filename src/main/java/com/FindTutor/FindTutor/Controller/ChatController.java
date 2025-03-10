@@ -30,7 +30,7 @@ public class ChatController {
         String sender = chatMessage.getSender();
         if (!((sender.equals("admin") && !receiver.equals("admin")) || (receiver.equals("admin") && !sender.equals("admin")))) {
             System.out.println("Invalid interaction: Only Admin-User or User-Admin allowed");
-            return; // Không xử lý nếu không phải Admin-User hoặc User-Admin
+            return;
         }
         chatMessage.setReceiver(receiver);
         ChatMessage savedMessage = chatMessageRepository.save(chatMessage);
@@ -62,5 +62,13 @@ public class ChatController {
     @GetMapping("/history")
     public List<ChatMessage> getChatHistory(@RequestParam String sender, @RequestParam String receiver) {
         return chatMessageRepository.findChatHistory(sender, receiver);
+    }
+
+    @GetMapping("/chatted-users")
+    public List<String> getChattedUsers(@RequestParam String username) {
+        if (!username.equals("admin")) {
+            return List.of("admin"); // User chỉ thấy admin
+        }
+        return chatMessageRepository.findChattedUsersForAdmin();
     }
 }
