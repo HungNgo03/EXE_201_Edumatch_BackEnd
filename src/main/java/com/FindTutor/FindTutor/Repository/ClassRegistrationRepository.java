@@ -12,4 +12,6 @@ public interface ClassRegistrationRepository extends JpaRepository<ClassRegistra
     ClassRegistrations getClassRegistrationsByID(int Id);
     List<ClassRegistrations> getClassRegistrationsByStudentId(int studentId);
     List<ClassRegistrations> getClassRegistrationsByTutorId(int tutorId);
+    @Query(value = "select c from ClassRegistrations c")
+    List<ClassRegistrations> getAllClassRegistration();
 }

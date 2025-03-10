@@ -5,6 +5,8 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Date;
 
 @Data
@@ -22,14 +24,15 @@ public class Schedules {
     private Classes classes;
 
     @Column(nullable = false)
-    private Date date;
+    private LocalDate date;
 
     @Column(nullable = false)
-    private String startTime;
+    private LocalTime startTime;
 
     @Column(nullable = false)
-    private String endTime;
-
+    private LocalTime endTime;
+    @Column(nullable = false)
+    private String status = "Scheduled";
     public Schedules() {
     }
 }

@@ -27,7 +27,8 @@ public class Classes {
     @ManyToOne
     @JoinColumn(name = "TutorID", nullable = false)
     private Tutors tutor;
-
+    @Column(name = "SubjectID")
+    private int subjectId;
     @ManyToMany
     @JsonManagedReference
     @JoinTable(

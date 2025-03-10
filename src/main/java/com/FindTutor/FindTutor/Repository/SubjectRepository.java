@@ -14,5 +14,6 @@ public interface SubjectRepository extends JpaRepository<Subjects, Integer> {
     @Query("SELECT new com.FindTutor.FindTutor.DTO.SubjectDTO(s.ID, s.subjectname, s.Description) FROM Subjects s")
 
     List<SubjectDTO> getAllSubjects();
+    Subjects getSubjectsBySubjectname(String subjectName);
 }
 

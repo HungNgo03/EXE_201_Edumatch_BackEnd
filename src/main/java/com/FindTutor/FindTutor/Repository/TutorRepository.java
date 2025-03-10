@@ -33,14 +33,14 @@ public interface TutorRepository extends JpaRepository<Tutors, Integer> {
 
     @Query(value = "SELECT t.ID, u.fullname, u.email, u.phone_number, t.Gender, " +
             "t.DateOfBirth, t.Address, t.Qualification, t.Experience, t.Bio, t.Status, " +
-            "STRING_AGG(s.subjectname, ',') AS subjects ,t.money_per_slot " +
+            "STRING_AGG(s.subjectname, ',') AS subjects ,t.money_per_slot, u.image " +
             "FROM Tutors t " +
             "JOIN Users u ON t.UserID = u.ID " +
             "LEFT JOIN TutorSubjects ts ON t.ID = ts.TutorID " +
             "LEFT JOIN Subjects s ON ts.SubjectID = s.ID " +
             "WHERE t.ID = :tutorId " +
             "GROUP BY t.ID, u.fullname, u.email, u.phone_number, t.Gender, " +
-            "t.DateOfBirth, t.Address, t.Qualification, t.Experience, t.Bio, t.Status,t.money_per_slot",
+            "t.DateOfBirth, t.Address, t.Qualification, t.Experience, t.Bio, t.Status,t.money_per_slot,u.image",
             nativeQuery = true)
     Object getTutorDetailById(@Param("tutorId") int tutorId);
 

@@ -54,6 +54,14 @@ public class ClassService implements IClassService {
             }
             return dto;
         }
+        if(user.getRole().equals("Admin")){
+            List<Classes> classes = classRepository.getAllClasses();
+            for (Classes cls : classes) {
+                ClassListDTO listDTO = new ClassListDTO(cls.getClassName(), cls.getTutor().getUser().getFullname());
+                dto.add(listDTO);
+            }
+            return dto;
+        }
         return null;
     }
 
