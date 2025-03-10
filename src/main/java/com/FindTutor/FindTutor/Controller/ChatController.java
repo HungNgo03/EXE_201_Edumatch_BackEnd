@@ -10,6 +10,7 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
 @RestController
 @RequestMapping("/chat")
 public class ChatController {
@@ -25,13 +26,17 @@ public class ChatController {
     @MessageMapping("/chat.sendPrivateMessage/{receiver}")
     public void sendPrivateMessage(@DestinationVariable String receiver, ChatMessage chatMessage) {
         System.out.println("Received message: " + chatMessage.getSender() + " -> " + receiver + ", Type: " + chatMessage.getType());
+        // Kiểm tra vai trò: chỉ cho phép Admin-User hoặc User-Admin tương tác
+        String sender = chatMessage.getSender();
+        if (!((sender.equals("admin") && !receiver.equals("admin")) || (receiver.equals("admin") && !sender.equals("admin")))) {
+            System.out.println("Invalid interaction: Only Admin-User or User-Admin allowed");
+            return; // Không xử lý nếu không phải Admin-User hoặc User-Admin
+        }
         chatMessage.setReceiver(receiver);
         ChatMessage savedMessage = chatMessageRepository.save(chatMessage);
         System.out.println("Saved message with ID: " + savedMessage.getId());
         messagingTemplate.convertAndSendToUser(receiver, "/queue/private", savedMessage);
         System.out.println("Sent to receiver: " + receiver + " via /user/" + receiver + "/queue/private");
-        messagingTemplate.convertAndSendToUser(chatMessage.getSender(), "/queue/private", savedMessage);
-        System.out.println("Sent to sender: " + chatMessage.getSender() + " via /user/" + chatMessage.getSender() + "/queue/private");
     }
 
     @MessageMapping("/chat.addUser")
