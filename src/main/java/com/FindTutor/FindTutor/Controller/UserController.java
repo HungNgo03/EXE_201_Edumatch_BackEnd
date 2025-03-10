@@ -232,31 +232,41 @@ public class UserController {
     private static final String UPLOAD_DIR = "uploads/"; // Thư mục lưu ảnh
 
     @PutMapping("/update-image/{id}")
-    public ResponseEntity<String> updateUserImage(@PathVariable int id, @RequestParam("file") MultipartFile file) {
+    public ResponseEntity<String> updateUserImage(@PathVariable int id, @RequestBody Map<String, String> request) {
         Optional<Users> userOptional = userRepository.findById(id);
         if (userOptional.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
         }
+
         Users user = userOptional.get();
         try {
-            user.setImage(file.getBytes()); // Lưu ảnh vào DB
+            // Chuyển từ Base64 -> byte[]
+            byte[] imageBytes = Base64.getDecoder().decode(request.get("imageData"));
+            user.setImage(imageBytes);
             userRepository.save(user);
+
             return ResponseEntity.ok("Image updated successfully");
-        } catch (IOException e) {
+        } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error saving image");
         }
     }
 
 
+
     @GetMapping("/image/{id}")
-    public ResponseEntity<String> getUserImage(@PathVariable int id) {
+    public ResponseEntity<Map<String, String>> getUserImage(@PathVariable int id) {
         Users user = userRepository.findById(id).orElse(null);
         if (user == null || user.getImage() == null) {
             return ResponseEntity.notFound().build();
         }
+
         String base64Image = Base64.getEncoder().encodeToString(user.getImage());
-        return ResponseEntity.ok(base64Image);
+        Map<String, String> response = new HashMap<>();
+        response.put("imageData", base64Image);
+
+        return ResponseEntity.ok(response);
     }
+
 
     @PutMapping("/change-password")
     public ResponseEntity<?> changePassword(@RequestBody ChangePasswordRequest request) {
