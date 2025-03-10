@@ -237,59 +237,27 @@ public class UserController {
         if (userOptional.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
         }
-
         Users user = userOptional.get();
-
         try {
-            // Xóa ảnh cũ nếu có
-            if (user.getImage() != null) {
-                File oldFile = new File(UPLOAD_DIR + user.getImage());
-                if (oldFile.exists() && oldFile.isFile()) {
-                    oldFile.delete(); // Xóa file ảnh cũ
-                }
-            }
-
-            // Lưu ảnh mới vào thư mục uploads
-            String fileName = UUID.randomUUID() + "_" + file.getOriginalFilename();
-            Path filePath = Paths.get(UPLOAD_DIR + fileName);
-            Files.write(filePath, file.getBytes());
-
-            // Cập nhật ảnh mới vào database
-            user.setImage(fileName);
+            user.setImage(file.getBytes()); // Lưu ảnh vào DB
             userRepository.save(user);
-
-            return ResponseEntity.ok("Image updated successfully: " + fileName);
+            return ResponseEntity.ok("Image updated successfully");
         } catch (IOException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error saving image");
         }
     }
 
+
     @GetMapping("/image/{id}")
-    public ResponseEntity<Resource> getUserImage(@PathVariable int id) {
-        try {
-            // Tìm user trong database
-            Users user = userRepository.findById(id).orElse(null);
-            if (user == null || user.getImage() == null) {
-                return ResponseEntity.notFound().build();
-            }
-
-            // Đường dẫn đến ảnh
-            Path filePath = Paths.get(UPLOAD_DIR + user.getImage());
-            Resource resource = new UrlResource(filePath.toUri());
-
-            if (resource.exists() || resource.isReadable()) {
-                // Xác định loại file ảnh
-                String contentType = Files.probeContentType(filePath);
-                return ResponseEntity.ok()
-                        .contentType(MediaType.parseMediaType(contentType))
-                        .body(resource);
-            } else {
-                return ResponseEntity.notFound().build();
-            }
-        } catch (IOException e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+    public ResponseEntity<String> getUserImage(@PathVariable int id) {
+        Users user = userRepository.findById(id).orElse(null);
+        if (user == null || user.getImage() == null) {
+            return ResponseEntity.notFound().build();
         }
+        String base64Image = Base64.getEncoder().encodeToString(user.getImage());
+        return ResponseEntity.ok(base64Image);
     }
+
     @PutMapping("/change-password")
     public ResponseEntity<?> changePassword(@RequestBody ChangePasswordRequest request) {
         Optional<Users> userOptional = userRepository.findById(request.getId());
