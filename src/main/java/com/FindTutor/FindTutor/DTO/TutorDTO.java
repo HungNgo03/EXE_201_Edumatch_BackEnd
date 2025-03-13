@@ -24,6 +24,7 @@ public class TutorDTO {
     private String email;
     private String username;
     private String role;
+    private byte[] image;
     private List<String> subjects; // Danh sách môn học
 
 
@@ -44,7 +45,7 @@ public class TutorDTO {
         this.id = id;
     }
 
-    public TutorDTO(int id, int userID, String fullname, boolean gender, Date dateOfBirth, String address, String qualification, int experience, String bio, int status, List<String> subjects) {
+    public TutorDTO(int id, int userID, String fullname, boolean gender, Date dateOfBirth, String address, String qualification, int experience, String bio, int status, List<String> subjects,byte[] image) {
         this.id = id;
         this.userID = userID;
         this.fullname = fullname;
@@ -56,6 +57,7 @@ public class TutorDTO {
         this.bio = bio;
         this.status = status;
         this.subjects = subjects;
+        this.image = image;
     }
 
 

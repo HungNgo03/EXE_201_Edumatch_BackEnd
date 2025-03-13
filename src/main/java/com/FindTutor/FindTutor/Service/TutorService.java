@@ -46,10 +46,10 @@ public class TutorService implements ITutorService {
                 String bio = (String) row[8];
                 int status = (int) row[9];
                 String subjectsString = (String) row[10];
-
+                byte[] image = (byte[]) row[11];
                 List<String> subjects = Arrays.asList(subjectsString.split(","));
 
-                TutorDTO tutor = new TutorDTO(id, userID, fullname, gender, dateOfBirth, address, qualification, exp, bio, status, subjects);
+                TutorDTO tutor = new TutorDTO(id, userID, fullname, gender, dateOfBirth, address, qualification, exp, bio, status, subjects,image);
                 tutors.add(tutor);
             } catch (Exception e) {
                 throw new RuntimeException("Error processing tutor data: " + e.getMessage(), e);
