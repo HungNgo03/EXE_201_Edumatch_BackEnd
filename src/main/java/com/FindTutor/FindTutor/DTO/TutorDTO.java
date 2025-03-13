@@ -5,8 +5,8 @@ package com.FindTutor.FindTutor.DTO;
 import lombok.Data;
 
 import java.sql.Date;
-import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 
 @Data
@@ -24,11 +24,9 @@ public class TutorDTO {
     private String email;
     private String username;
     private String role;
-    private String image;
     private List<String> subjects; // Danh sách môn học
 
-    // Constructor mặc định
-    public TutorDTO() {}
+
 
     public TutorDTO(String role, String username, String email, int status, String bio, int experience, String qualification, String address, Date dateOfBirth, boolean gender, String fullname, int userID, int id) {
         this.role = role;
@@ -46,7 +44,6 @@ public class TutorDTO {
         this.id = id;
     }
 
-    // Constructor với tham số
     public TutorDTO(int id, int userID, String fullname, boolean gender, Date dateOfBirth, String address, String qualification, int experience, String bio, int status, List<String> subjects) {
         this.id = id;
         this.userID = userID;
@@ -60,21 +57,6 @@ public class TutorDTO {
         this.status = status;
         this.subjects = subjects;
     }
-    public TutorDTO(int id, int userID, String fullname, boolean gender, Date dateOfBirth,
-                    String address, String qualification, int experience, String bio, int status,
-                    String image, List<String> subjects) {
-        this.id = id;
-        this.userID = userID;
-        this.fullname = fullname;
-        this.gender = gender;
-        this.dateOfBirth = dateOfBirth;
-        this.address = address;
-        this.qualification = qualification;
-        this.experience = experience;
-        this.bio = bio;
-        this.status = status;
-        this.image = image;
-        this.subjects = subjects;
-    }
-    
+
+
 }

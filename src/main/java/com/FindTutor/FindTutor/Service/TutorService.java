@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.text.SimpleDateFormat;
 
+import java.util.Base64;
 import java.util.List;
 
 
@@ -33,23 +34,26 @@ public class TutorService implements ITutorService {
         List<TutorDTO> tutors = new ArrayList<>();
 
         for (Object[] row : results) {
-            int id = (int) row[0];
-            int userID = (int) row[1];
-            String fullname = (String) row[2];
-            boolean gender = (boolean) row[3];
-            Date dateOfBirth = (Date) row[4];
-            String address = (String) row[5];
-            String qualification = (String) row[6];
-            int experience = (int) row[7];
-            String bio = (String) row[8];
-            int status = (int) row[9];
-            String image = (String) row[10];
-            String subjectsString = (String) row[11];
-            List<String> subjects = subjectsString.isEmpty() ? new ArrayList<>() : Arrays.asList(subjectsString.split(","));
+            try {
+                int id = (int) row[0];
+                int userID = (int) row[1];
+                String fullname = (String) row[2];
+                boolean gender = (boolean) row[3]; // Xử lý lỗi nếu gender không phải boolean
+                Date dateOfBirth = (Date) row[4];
+                String address = (String) row[5];
+                String qualification = (String) row[6];
+                int exp = (int) row[7];
+                String bio = (String) row[8];
+                int status = (int) row[9];
+                String subjectsString = (String) row[10];
 
-            TutorDTO tutor = new TutorDTO(id, userID, fullname, gender, dateOfBirth, address, qualification, experience, bio, status, image, subjects);
-            tutors.add(tutor);
-        }
+                List<String> subjects = Arrays.asList(subjectsString.split(","));
+
+                TutorDTO tutor = new TutorDTO(id, userID, fullname, gender, dateOfBirth, address, qualification, exp, bio, status, subjects);
+                tutors.add(tutor);
+            } catch (Exception e) {
+                throw new RuntimeException("Error processing tutor data: " + e.getMessage(), e);
+            }}
 
         return tutors;
     }
@@ -106,7 +110,7 @@ public class TutorService implements ITutorService {
         int status = ((Number) row[10]).intValue();
         String subjectsString = (String) row[11];
         double money_per_slot = ((Number) row[12]).doubleValue();
-        String image = (String) row[13];
+        byte[] image = (byte[]) row[13];
         // Kiểm tra NULL trước khi dùng
         List<String> subjects = subjectsString != null ? Arrays.asList(subjectsString.split(",")) : new ArrayList<>();
 
@@ -128,6 +132,8 @@ public class TutorService implements ITutorService {
 
         return new TutorDetailDTO(id, fullname, email, phoneNumber, gender, dateOfBirth, address, qualification, experience, bio, status,money_per_slot, subjects, schedules,image);
     }
+
+
 
 
 }
