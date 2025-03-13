@@ -36,7 +36,7 @@ public class Users {
     public Users() {
     }
 
-    public Users(int ID, String username, String passwordHash, String fullName, String email, String phoneNumber, String role, Date createdAt) {
+    public Users(int ID, String username, String passwordHash, String fullName, String email, String phoneNumber, String role, Date createdAt, byte[] image) {
         this.ID = ID;
         this.username = username;
         this.passwordHash = passwordHash;
