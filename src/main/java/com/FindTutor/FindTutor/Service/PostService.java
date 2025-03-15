@@ -71,4 +71,9 @@ public class PostService implements IPostService {
     public List<SubjectDTO> getAllSubject2() {
         return postRepository.getAllSubject2();
     }
+
+    @Override
+    public void deletePost(int id) {
+        postRepository.deleteById(id);
+    }
 }

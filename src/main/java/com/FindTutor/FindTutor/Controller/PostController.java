@@ -24,7 +24,15 @@ import java.util.List;
 public class PostController {
     @Autowired
     private IPostService postService;
-
+    @DeleteMapping("/deletePost/{id}")
+    public Response<?> deletePost(@PathVariable int id) {
+        try {
+            postService.deletePost(id);
+            return new Response<>(EHttpStatus.OK, "Post deleted successfully");
+        } catch (Exception e) {
+            return new Response<>(EHttpStatus.NOT_FOUND, "Post not found with id: " + id);
+        }
+    }
     @GetMapping("/getAllPost")
     public Response<List<PostDTO>> getAllPost(){
         return new Response<>(EHttpStatus.OK, postService.getAllPost());

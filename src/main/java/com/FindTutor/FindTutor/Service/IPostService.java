@@ -18,4 +18,5 @@ public interface IPostService {
     List<SubjectDTO> getAllSubjectId();
     List<PostDTO> findPostsBySubjectAndUsername(String subjectname, String username);
     List<SubjectDTO> getAllSubject2();
+    void deletePost(int id);
 }
