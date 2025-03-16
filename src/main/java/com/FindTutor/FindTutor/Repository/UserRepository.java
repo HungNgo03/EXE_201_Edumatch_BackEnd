@@ -29,4 +29,8 @@ public interface UserRepository extends JpaRepository<Users, Integer> {
     Users getUsersByID(int Id);
     @Query("SELECT new com.FindTutor.FindTutor.DTO.AdminDTO(u.ID, u.username, u.fullname, u.email, u.phoneNumber, u.Role, u.CreatedAt) FROM Users u where u.Role = 'Student'")
     List<AdminDTO> findAllUser();
+    @Query("SELECT u.Role FROM Users u WHERE u.username = :username")
+    String findRoleByUsername(String username);
+    @Query("SELECT u FROM Users u WHERE u.Role = :role")
+    List<Users> findByRole(String role);
 }

@@ -18,7 +18,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         registry.addEndpoint("/chat-websocket")
-                .setAllowedOrigins("http://edumatch.click")
+                .setAllowedOrigins("http://edumatch.click","http://127.0.0.1:5500","http://localhost:8080/")
                 .withSockJS();
     }
 }
