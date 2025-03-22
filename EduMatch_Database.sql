@@ -94,14 +94,13 @@ CREATE TABLE Reviews (
                          FOREIGN KEY (StudentID) REFERENCES Students(ID) ,
                          FOREIGN KEY (TutorID) REFERENCES Tutors(ID)
 );
-CREATE TABLE Messages (
-                          ID INT IDENTITY(1,1) PRIMARY KEY,
-                          SenderID INT NOT NULL,
-                          ReceiverID INT NOT NULL,
-                          Message NVARCHAR(MAX) NOT NULL,
-                          SentAt DATETIME DEFAULT GETDATE(),
-                          FOREIGN KEY (SenderID) REFERENCES Users(ID) ,
-                          FOREIGN KEY (ReceiverID) REFERENCES Users(ID)
+CREATE TABLE chat_messages (
+                               id INT IDENTITY(1,1) PRIMARY KEY,
+                               sender NVARCHAR(255) NOT NULL,    -- Changed to NVARCHAR to match String
+                               receiver NVARCHAR(255) NOT NULL,  -- Changed to NVARCHAR to match String
+                               content NVARCHAR(MAX) NOT NULL,
+                               type NVARCHAR(50) NOT NULL,       -- Matches MessageType enum
+                               timestamp DATETIME DEFAULT GETDATE()
 );
 CREATE TABLE Post (
                       ID INT IDENTITY(1,1) PRIMARY KEY,
